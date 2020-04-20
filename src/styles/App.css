@@ -1,0 +1,11 @@
+
+h1 {
+    color: #27aedb;
+    text-align: center;
+}
+
+
+.cart-widget-item{
+    display: inline-block;
+    padding: 10px;
+}
