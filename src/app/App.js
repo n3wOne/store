@@ -1,43 +1,63 @@
 import React, { Component } from "react";
-import Cart from "../components/cart/Cart"
-import Catalog from "../containers/productList/ProductList"
 import { connect } from 'react-redux'
-import { Provider } from 'react-redux'
 import { Route, Link } from 'react-router-dom'
-import store from '../store'
 
 import '../styles/App.css';
-import CartWidget from "../components/cart/CartWidget";
+import {Header} from "../containers/Header";
+import {Sidebar} from "../containers/Sidebar";
+import ProductList from "../containers/ProductList";
+import {Footer} from "../containers/Footer";
+import {Col, Container, Row} from "react-bootstrap";
+import {Cart} from "../components/Cart";
+import CartWidget from "../components/CartWidget";
 
-const App = () => (
-    <div>
-        <header>
+// const App = () => (
+//     <div>
+//         <header>
+//             <Link to="/">Home</Link>
+//             <Link to="/cart">Cart</Link>
+//             <CartWidget />
+//         </header>
+//         <body>
+//             {/*<Route exact path="/" component={Catalog} />*/}
+//             {/*<Route exact path="/cart" component={Cart} />*/}
+//         </body>
+//         <footer>
+//
+//         </footer>
+//     </div>
+// );
+
+const App = (props) =>(
+    <Container fluid>
+        <Row>
+           <Header/>
             <Link to="/">Home</Link>
             <Link to="/cart">Cart</Link>
-            <CartWidget />
-        </header>
-        <body>
-            <Route exact path="/" component={Catalog} />
-            <Route exact path="/cart" component={Cart} />
-        </body>
-        <footer>
+            <Col lg={{offset: 7}}><CartWidget /></Col>
+        </Row>
+        <Row>
+            <Col lg={3}><Sidebar/></Col>
+            <Col>
+                <Route exact path={`/`} component={ProductList} />
+                <Route exact path={`/cart`} component={Cart} />
+            </Col>
+        </Row>
+        <Row>
+            <Col fluid><Footer/></Col>
+        </Row>
 
-        </footer>
-    </div>
+
+    </Container>
 );
 
-// class App extends Component {
-//     render() {
-//         return (
-//             <Provider store={store}>
-//                 <ProductList />
-//             </Provider>
-//         );
-//     }
-// }
+const mapStateToProps = ({products, cart, cartTotal}) => {
+    return {
+        products,
+        cart: cart.cart,
+        cartTotal: cart.cartTotal
+    }
+};
 
-const mapStateToProps = ({ cart })  => ({
-    cart: cart.cart
-});
 
 export default connect(mapStateToProps)(App);

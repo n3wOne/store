@@ -1,17 +1,16 @@
 import {createStore, applyMiddleware, combineReducers, compose} from "redux";
-import reducer from "../reducer";
-import data from "../data"
 import { connectRouter, routerMiddleware } from 'connected-react-router'
 import thunk from 'redux-thunk'
 import logger from 'redux-logger'
 import createHistory from 'history/createBrowserHistory'
-import cartReducer from "../reducer/cartReducer";
+import {ProductReducer} from "../reducer/ProductsReducer";
+import {CartReducer} from "../reducer/CartReducer";
 
 export const history = createHistory();
 
 const reducers = combineReducers({
-    products: reducer,
-    cart: cartReducer,
+    products: ProductReducer,
+    cart: CartReducer,
     router: connectRouter(history)
 });
 
@@ -30,11 +29,9 @@ const composedEnhancers = compose(
     ...enhancers
 );
 
-const initialState = {};
-
 const store = createStore(
     reducers,
-    initialState,
+    {},
     composedEnhancers
 );
 export default store;
