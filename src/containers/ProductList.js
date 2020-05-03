@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import {CartItem} from "../components/CartItem";
 import {CARD_ITEM} from "../Constants";
 import {Cart} from "../components/Cart";
+import {Card as CardItem, CardColumns} from "react-bootstrap";
 
 class ProductList extends Component{
     constructor(props) {
@@ -16,14 +17,25 @@ class ProductList extends Component{
     removeFromCart = payload => this.props.dispatch({type: REMOVE_FROM_CART, payload});
 
     prepareChildren(){
-        const {products} = this.props.products;
+        const {products, filterList } = this.props.products;
         const productInCart = (item) => this.props.cart.includes(item);
-        return products.map( item => <CartItem type={CARD_ITEM} productInCart={productInCart(item)} addToCart={this.addToCart} removeFromCart={this.removeFromCart} key={item.id} product={item} />);
+        window.filt = filterList;
+        return products.filter(product => filterList.length > 0 ? filterList.includes(product.category) : product)
+            .map( item =>
+                <CartItem
+                    key={item.id}
+                    type={CARD_ITEM}
+                    productInCart={productInCart(item)}
+                    addToCart={this.addToCart}
+                    removeFromCart={this.removeFromCart}
+                    product={item}
+                    style={{ width: '10em', color: "red" }}
+                />);
     }
 
     render(){
         const children = this.prepareChildren();
-        return (<><CardDeck>{children}</CardDeck>
+        return (<><CardColumns>{children}</CardColumns>
             <Cart />
             </>
                 )

@@ -10,6 +10,7 @@ import {Footer} from "../containers/Footer";
 import {Col, Container, Row} from "react-bootstrap";
 import {Cart} from "../components/Cart";
 import CartWidget from "../components/CartWidget";
+import ProductDetails from "../components/ProductDetails";
 
 // const App = () => (
 //     <div>
@@ -41,6 +42,7 @@ const App = (props) =>(
             <Col>
                 <Route exact path={`/`} component={ProductList} />
                 <Route exact path={`/cart`} component={Cart} />
+                <Route path={`/product/:id`} component={ProductDetails} />
             </Col>
         </Row>
         <Row>
@@ -60,4 +62,4 @@ const mapStateToProps = ({products, cart, cartTotal}) => {
 };
 
 
-export default connect(mapStateToProps)(App);
+export default App;

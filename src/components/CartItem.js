@@ -1,6 +1,7 @@
 import React, {Component, useState} from "react";
 import {Card as CardItem, Row, Button, Col} from "react-bootstrap";
 import {CART_ITEM} from "../Constants";
+import { Route, Link } from 'react-router-dom'
 
 const cartTemplate = ({product, text, onClickFunction, decreaseItem, addToCart, itemCount})=>{
     return(<Row>
@@ -14,9 +15,16 @@ const cartTemplate = ({product, text, onClickFunction, decreaseItem, addToCart, 
 </Row>)};
 
 const cardTemplate = ({product, text, onClickFunction}) =>(
-    <CardItem>
+    <CardItem style={{ width: '14rem' }}>
+        <CardItem.Header>{product.category}</CardItem.Header>
         <CardItem.Body>
-            <CardItem.Title>{product.name}</CardItem.Title>
+            <CardItem.Title>
+                <Link to={{ pathname: `/product/${product.id}`,
+                state: product
+                }}>
+                    {product.name}
+                </Link>
+            </CardItem.Title>
             <CardItem.Text>{product.description}</CardItem.Text>
             <CardItem.Text>{product.price}</CardItem.Text>
         </CardItem.Body>
@@ -25,15 +33,13 @@ const cardTemplate = ({product, text, onClickFunction}) =>(
 );
 
 export const CartItem = ({product, addToCart, removeFromCart, productInCart, type, decreaseItem, itemCount}) =>{
-    const [inCart, setInCart] = useState(productInCart);
-    const text = inCart ? "Remove From Cart" : "Add To Cart";
+    const text = productInCart ? "Remove From Cart" : "Add To Cart";
     const onClickFunction = () => {
         if(type === CART_ITEM){
             return removeFromCart(product);
         }
         else{
-            setInCart(!inCart);
-            return inCart ? removeFromCart(product) : addToCart(product)
+            return productInCart ? removeFromCart(product) : addToCart(product)
         }
     };
 

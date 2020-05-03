@@ -19,7 +19,7 @@ const reducers = combineReducers({
 const middleware = [
     thunk,
     routerMiddleware(history),
-    logger
+    // logger
 ];
 
 const enhancers = [];

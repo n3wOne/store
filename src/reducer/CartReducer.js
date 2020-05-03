@@ -6,8 +6,6 @@ const initialState = {
     cartTotal: 0
 };
 
-const getCartTotal = cart => cart.reduce( (total, product) => total + product.price, 0);
-
 export function CartReducer(state = initialState, action) {
     switch (action.type) {
         case ADD_TO_CART:
@@ -26,6 +24,8 @@ const decreaseItem = (state, action) => {
     _.remove(newState, (item, index) => index === _.findLastIndex(state.cart, action.payload));
     return newCartState(newState);
 };
+
+const getCartTotal = cart => cart.reduce( (total, product) => total + product.price, 0);
 
 const newCartState = (state) => ({
     cart: state,
