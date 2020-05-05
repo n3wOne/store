@@ -1,5 +1,5 @@
-import React from "react";
+import React from "react"
 
 export const Navigation = () => (
-    <div>Navigation</div>
-);
+  <div>Navigation</div>
+)

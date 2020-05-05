@@ -1,7 +1,7 @@
-import React from "react";
-import { Row, Col} from "react-bootstrap";
-import {connectCartWidgetToStore} from "../hoc/ConnectHolder";
+import React from "react"
 
-const CartWidget = props =>(<div>Count: {props.count} Total: {props.total}</div>);
+import { connectCartWidgetToStore } from "../hoc/ConnectHolder"
 
-export default connectCartWidgetToStore(CartWidget);
+const CartWidget = props => (<div>Count: {props.count} Total: {props.total}</div>)
+
+export default connectCartWidgetToStore(CartWidget)
