@@ -9,7 +9,7 @@ const CartContainer = props => {
   const prepareChildren = () => {
     const { cart, addToCart, removeFromCart, decreaseItem } = props
     const productInCart = (item) => props.cart.includes(item)
-    if (!cart) return null
+    if (!cart) return <div>В корзине ничего нет</div>;
     const cartItems = [...new Set(cart)]
     return cartItems.map(item => {
       const itemsCount = cart.filter(cartItem => cartItem.id === item.id).length

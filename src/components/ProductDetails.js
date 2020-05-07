@@ -1,6 +1,8 @@
 
 import React from "react"
 import { connectProductDetailsToStore } from "../hoc/ConnectHolder"
+import { connect } from "react-redux"
+import {LOAD_PRODUCT_DETAILS} from "../action/actions";
 
 class ProductDetails extends React.Component {
   constructor (props) {
@@ -16,12 +18,14 @@ class ProductDetails extends React.Component {
   }
 
   async loadProduct () {
+    const id = this.props.match.params.id;
+    const product = this.props.dispatch({
+      type: LOAD_PRODUCT_DETAILS,
+      payload: id
+    });
+    console.log(product)
     try {
-      const product = {
-        name: "test",
-        description: "text",
-        price: 200
-      }
+      const product = this.props.location.state;
       return await setTimeout(() => this.setState({ product, isLoading: false }), 1500)
     } catch (e) {
       console.log(e)
@@ -40,4 +44,10 @@ class ProductDetails extends React.Component {
   }
 };
 
-export default connectProductDetailsToStore(ProductDetails)
+const mapStateToProps = (state) => {
+  return {
+    ...state
+  }
+}
+
+export default connect(mapStateToProps)(ProductDetails);

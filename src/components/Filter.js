@@ -1,27 +1,28 @@
 import React from "react"
 import { connectFilterToStore } from "../hoc/ConnectHolder"
+import FormGroup from "@material-ui/core/FormGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 
 const Filter = props => {
-  const { categories, filterItems, filterList } = props
-  // console.log(categories);
-  // console.log(filterList);
+  const { categories, filterItems, filterList } = props;
 
   const handleChange = (event) => {
-    const { target } = event
-    const value = target.checked
-    const { name } = target
+    const { target } = event;
+    const value = target.checked;
+    const { name } = target;
     value
       ? filterItems([...filterList, name])
       : filterItems(filterList.filter(item => item !== name))
-  }
+  };
 
-  const prepareChildren = categories.map(item => (
-    <div>
-      <input onChange={handleChange} name={item.key} type="checkbox" value={item.key} />
-      <label htmlFor={item.value}>{item.value}</label>
-    </div>)
-  )
-  return <div>{prepareChildren}</div>
-}
+  const prepareChildren = categories && categories.map(item => (
+      <FormControlLabel
+          control={<Checkbox onChange={handleChange} name={item.key} />}
+          label={item.value}
+      />)
+  );
+  return <FormGroup>{prepareChildren}</FormGroup>
+};
 
 export default connectFilterToStore(Filter)

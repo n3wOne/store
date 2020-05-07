@@ -37,7 +37,7 @@ const mapCartState = state => {
 
 const mapProductDetailsToProps = (state, props) => {
   const { isLoading, product, productId } = state.products
-  console.log(state, props)
+  console.log(state, props);
   return {
     product,
     productId,

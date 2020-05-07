@@ -1,4 +1,4 @@
-import { categories } from "../data/mockData"
+import { categories, data2 as data } from "../data/mockData"
 import { FILTER_ITEMS, LOAD_PRODUCT_DETAILS, LOAD_PRODUCT_DETAILS_SUCCESS } from "../action/actions"
 export const LOAD_PRODUCT_LIST_SUCCESS = "LOAD_PRODUCT_LIST_SUCCESS"
 export const LOAD_PRODUCT_LIST = "LOAD_PRODUCT_LIST"
@@ -11,6 +11,11 @@ const initialState = {
   productIsLoading: true
 }
 
+const loadProduct = async (state, id) => {
+  const product = data.filter( item => item.id === id);
+  return { product }
+}
+
 export function ProductReducer (state = initialState, action) {
   switch (action.type) {
     case LOAD_PRODUCT_LIST:
@@ -20,10 +25,9 @@ export function ProductReducer (state = initialState, action) {
     case FILTER_ITEMS:
       return { ...state, filterList: action.payload }
     case LOAD_PRODUCT_DETAILS:
-      console.log("LOAD_PRODUCT_DETAILS")
-      return { ...state, product_id: action.payload, isLoading: true }
+      // return { ...state, product_id: action.payload, isLoading: true }
+      return loadProduct(action.payload);
     case LOAD_PRODUCT_DETAILS_SUCCESS:
-      console.log("LOAD_PRODUCT_DETAILS_SUCCESS")
       return { ...state, product: action.payload, isLoading: false }
     default:
       return state
