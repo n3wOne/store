@@ -21,10 +21,9 @@ class ProductDetails extends React.Component {
       type: LOAD_PRODUCT_DETAILS,
       payload: id,
     });
-    console.log(product);
     try {
       const product = this.props.location.state;
-      return await setTimeout(() => this.setState({ product, isLoading: false }), 1500);
+      return await setTimeout(() => this.setState({ product, isLoading: false }), 500);
     } catch (e) {
       console.log(e);
     }

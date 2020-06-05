@@ -1,11 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
 import CheckoutForm from './CheckoutForm';
 import { CheckoutText } from '../../Constants';
@@ -19,56 +12,37 @@ const getResponse = () => {
       method: 'POST',
       body: JSON.stringify({ name: 'helloUser', u: 111 }),
       mode: 'cors',
-    }).then((result) => {
-    console.log(result);
-    return result.text();
-  })
+    }).then((result) => result.text())
     .then((data) => console.log(data));
 };
 
-function Checkout(props) {
-  const [activeStep, setActiveStep] = React.useState(0);
+const thanks = () => <>
+    <h2>
+        {CheckoutText.THANKS}
+    </h2>
+    <p className="text">
+        {CheckoutText.THANKS_TEXT}
+    </p>
+</>;
 
-  const handleNext = async () => {
+function Checkout(props) {
+  const [submitForm, setSubmitForm] = React.useState(false);
+
+  const handleSubmitForm = async () => {
+    if (!props.cart.length > 0) return alert('Корзина пуста!');
     await getResponse();
-    setActiveStep(activeStep + 1);
+    setSubmitForm(true);
   };
 
   return (
-
-            <main className="checkout-form-main">
-                <div className="main-container-paper" style={{ padding: '20px', marginTop: '10px', marginBottom: '20px' }}>
-                        {activeStep === steps.length ? (
-                            <>
-                                <h2>
-                                    {CheckoutText.THANKS}
-                                </h2>
-                                <p className="text">
-                                    {CheckoutText.THANKS_TEXT}
-                                </p>
-                            </>
-                        ) : (
-                            <>
-                                <h1 align="center">
-                                    {CheckoutText.CHECKOUT}
-                                </h1>
-                                {<CheckoutForm />}
-                                <div className="place-order">
-                                    <button
-                                        onClick={handleNext}
-                                    >
-                                        {CheckoutText.PLACE_ORDER}
-                                    </button>
-                                </div>
-                            </>
-                        )}
-                </div>
-            </main>
+    submitForm ? (
+      thanks()
+    ) : <CheckoutForm cart={props.cart} cartTotal={props.cartTotal} handleSubmitForm={handleSubmitForm} />
   );
 }
 
 const mapStateToProps = ({
-  products, cart, cartTotal, isLoading,
+  products, cart,
 }) => ({
   isLoading: products.productIsLoading,
   products,

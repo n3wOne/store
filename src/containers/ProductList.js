@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { ADD_TO_CART, REMOVE_FROM_CART } from '../action/actions';
 import { CartItem } from '../components/CartItem';
-import { CARD_ITEM } from '../Constants';
+import { CARD_ITEM, LOADING } from '../Constants';
 import { LOAD_PRODUCT_LIST, LOAD_PRODUCT_LIST_SUCCESS } from '../reducer/ProductsReducer';
 import { data2 as data } from '../data/mockData';
 
@@ -43,14 +43,18 @@ class ProductList extends Component {
     prepareChildren() {
       const { products, filterList, categories } = this.props.products;
       const productInCart = (item) => this.props.cart.includes(item);
-      return products && products.filter((product) => (filterList && filterList.length > 0 ? filterList.includes(product.category) : product))
+      const props = {
+        type: CARD_ITEM,
+        addToCart: this.addToCart,
+        removeFromCart: this.removeFromCart,
+      };
+      const filterProducts = products && products.filter((product) => (filterList && filterList.length > 0 ? filterList.includes(product.category) : product));
+      return filterProducts
         .map((item) => <CartItem
+            {...props}
                     key={item.id}
                     category={categories && categories[categories.findIndex((findItem) => findItem.key === item.category)].value}
-                    type={CARD_ITEM}
                     productInCart={productInCart(item)}
-                    addToCart={this.addToCart}
-                    removeFromCart={this.removeFromCart}
                     product={item}
                 />);
     }
@@ -61,13 +65,13 @@ class ProductList extends Component {
         ? <div className="product-list">
                     {this.prepareChildren()}
                 </div>
-        : <div>Загрузка данных</div>
+        : <div>{LOADING}</div>
       );
     }
 }
 
 const mapStateToProps = ({
-  products, cart, cartTotal, isLoading,
+  products, cart,
 }) => ({
   isLoading: products.productIsLoading,
   products,

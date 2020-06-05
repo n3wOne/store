@@ -13,20 +13,6 @@ import Checkout from '../components/checkout/Checkout';
 import Filter from '../components/Filter';
 import CartWidget from '../components/CartWidget';
 
-
-const getResponse = () => {
-  fetch('http://vk.ferma-ivanovka.ru/fetchquery.php',
-    {
-      method: 'POST',
-      body: JSON.stringify({ name: 'helloUser', u: 111 }),
-      mode: 'cors',
-    }).then((result) => {
-    console.log(result);
-    return result.text();
-  })
-    .then((data) => console.log(data));
-};
-
 const App = (props) => (
         <div className="root">
             <div className="main-container">

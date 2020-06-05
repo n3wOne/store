@@ -3,8 +3,6 @@ import {
   ADD_TO_CART,
   DECREASE_CART_ITEM,
   FILTER_ITEMS,
-  LOAD_PRODUCT_DETAILS,
-  LOAD_PRODUCT_DETAILS_SUCCESS,
   REMOVE_FROM_CART,
 } from '../action/actions';
 
@@ -19,7 +17,7 @@ const mapStateToProps = (state, props) => {
   };
 };
 
-const mapFilterStateToProps = (state, props) => {
+const mapFilterStateToProps = (state) => {
   const { categories, filterList, isLoading } = state.products;
   return {
     isLoading,
@@ -36,15 +34,6 @@ const mapCartState = (state) => {
   };
 };
 
-const mapProductDetailsToProps = (state, props) => {
-  const { isLoading, product, productId } = state.products;
-  return {
-    product,
-    productId,
-    isLoading,
-  };
-};
-
 const mapFilterDispatchToProps = (dispatch) => ({
   filterItems: (payload) => dispatch({
     type: FILTER_ITEMS,
@@ -52,36 +41,6 @@ const mapFilterDispatchToProps = (dispatch) => ({
   }),
 });
 
-function loadprod(payload) {
-  return (dispatch) => {
-    dispatch({
-      type: LOAD_PRODUCT_DETAILS,
-      payload,
-    });
-
-    setTimeout(() => {
-      dispatch({
-        type: LOAD_PRODUCT_DETAILS_SUCCESS,
-        payload: {
-          id: 2,
-          name: 'product2',
-          description: 'product 2 description',
-          price: 200,
-          category: 'cat2',
-        },
-      });
-    }, 2000);
-  };
-}
-
-const mapProductDispatchToProps = (dispatch) => ({
-  loadProductDetails: (payload) => dispatch(loadprod(payload)),
-});
-
-export const loadDetails = (payload) => ({
-  type: LOAD_PRODUCT_DETAILS,
-  payload,
-});
 
 const mapDispatchToProps = (dispatch) => ({
   addToCart: (payload) => dispatch({
@@ -110,10 +69,4 @@ export const connectCartWidgetToStore = (CartWidget) => connect(
 export const connectFilterToStore = (WrappedComponent) => connect(
   (state, props) => mapFilterStateToProps(state, props),
   mapFilterDispatchToProps,
-)(WrappedComponent);
-
-export const connectProductDetailsToStore = (WrappedComponent) => connect(
-  (state, props) => mapProductDetailsToProps(state, props),
-  // null,
-  mapProductDispatchToProps,
 )(WrappedComponent);

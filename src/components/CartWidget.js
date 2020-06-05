@@ -18,7 +18,7 @@ const StyledBadge = withStyles((theme) => ({
 
 function CartWidget(props) {
   return (
-        <Grid container xs={12} justify={'center'} alignItems={'center'}>
+        <Grid key={'cart-widget'} container justify={'center'} alignItems={'center'}>
             <Grid item>
                 <Link to={ROUTE_TO_CART}>
             <IconButton aria-label="cart" style={{ outline: 'none' }}>

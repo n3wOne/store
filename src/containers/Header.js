@@ -11,10 +11,10 @@ const menuItems = [
   [ROUTE_TO_CHECKOUT, Menu.CHECKOUT],
 ];
 
-const menuLink = (link, text) => <Grid className="navigation-item" item><Link to={link}>{text}</Link></Grid>;
+const menuLink = (link, text) => <Grid key={text} className="navigation-item" item><Link to={link}>{text}</Link></Grid>;
 
 export const Header = () => (
-  <Grid container spacing={5} xs={12} justify="center" alignItems={'center'} className={'navigation-header'}>
+  <Grid key={'header'} container spacing={5} justify="center" alignItems={'center'} className={'navigation-header'}>
       { menuItems.map((item) => menuLink(item[0], item[1])) }
   </Grid>
 );

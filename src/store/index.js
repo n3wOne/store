@@ -16,17 +16,16 @@ const reducers = combineReducers({
   cart: CartReducer,
   router: connectRouter(history),
 });
-
-const middleware = [
-  thunk,
-  routerMiddleware(history),
-  logger,
-];
+//
+// const middleware = [
+//   routerMiddleware(history),
+//   // logger,
+// ];
 
 const enhancers = [];
 
 const composedEnhancers = compose(
-  applyMiddleware(...middleware),
+  applyMiddleware(routerMiddleware(history)),
   ...enhancers,
 );
 

@@ -164,7 +164,7 @@ button{
 input{
     font: inherit;
     color: currentColor;
-    width: 100%;
+    /*width: 100%;*/
     border: 0;
     height: 1.1876em;
     margin: 0;
@@ -322,3 +322,30 @@ input{
     display: flex;
     justify-content: flex-end;
 }
+
+
+input.filter-item-checkbox{
+    width: auto;
+    flex: 1;
+}
+
+.filter-item-label{
+    flex: 5;
+}
+
+.filter-root{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-item{
+    list-style-type: none;
+    display: flex;
+    flex: 1;
+    padding: 10px;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+

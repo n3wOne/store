@@ -1,5 +1,8 @@
 export const CART_ITEM = 'cartItem';
 export const CARD_ITEM = 'cardItem';
+export const LOADING = 'Загрузка данных';
+export const WEB_SITE = ' Your Website';
+export const COPYRIGHT = 'Copyright © ';
 export const Cart = {
   ADD_TO_CART: 'Добавить',
   REMOVE_FROM_CART: 'Убрать',
@@ -16,6 +19,8 @@ export const ORDER_BUTTON = 'Оформить заказ';
 
 export const COMPANY_NAME = 'Ферма «Ивановка»';
 
+export const ORDER_SUMMARY = 'Ваш заказ: ';
+
 export const ROUTE_TO_HOME = '/';
 export const ROUTE_TO_CART = '/cart';
 export const ROUTE_TO_CHECKOUT = '/checkout';
@@ -25,4 +30,14 @@ export const CheckoutText = {
   PLACE_ORDER: 'Разместить заказ',
   CHECKOUT: 'Оформить заказ',
   THANKS_TEXT: 'Ваш заказ принят в обработку. В ближайшее время с Вами свяжутся для уточнения деталей заказа',
+};
+
+export const CheckOutForm = {
+  name: 'Имя',
+  lastName: 'Фамилия',
+  address: 'Адрес',
+  tel: 'Контактный телефон',
+  email: 'email',
+  total: 'Общая сумма заказа',
+  agreement: 'Я даю согласие на обработку своих персональных данных',
 };
