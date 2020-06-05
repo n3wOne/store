@@ -1,53 +1,64 @@
-import React, { Component } from "react"
-import { Route, Link } from "react-router-dom"
+import React, { Component } from 'react';
+import { Route, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import "../styles/App.css"
-import { Header } from "../containers/Header"
-import { Sidebar } from "../containers/Sidebar"
-import ProductList from "../containers/ProductList"
-import { Footer } from "../containers/Footer"
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import { Col,  Row } from "react-bootstrap"
-import { Cart } from "../components/Cart"
-import CartWidget from "../components/CartWidget"
-import ProductDetails from "../components/ProductDetails"
-import Checkout from "../components/checkout/Checkout";
-import Paper from "@material-ui/core/Paper";
-import Box from "@material-ui/core/Box";
-import CartWidgetContainer from "../components/CartWidgetContainer";
+import '../styles/style.css';
+import { Header } from '../containers/Header';
+import ProductList from '../containers/ProductList';
+import { Footer } from '../containers/Footer';
+import Grid from '../components/Grid';
+import { Cart } from '../components/Cart';
+import ProductDetails from '../components/ProductDetails';
+import Checkout from '../components/checkout/Checkout';
+import Filter from '../components/Filter';
+import CartWidget from '../components/CartWidget';
+
+
+const getResponse = () => {
+  fetch('http://vk.ferma-ivanovka.ru/fetchquery.php',
+    {
+      method: 'POST',
+      body: JSON.stringify({ name: 'helloUser', u: 111 }),
+      mode: 'cors',
+    }).then((result) => {
+    console.log(result);
+    return result.text();
+  })
+    .then((data) => console.log(data));
+};
 
 const App = (props) => (
+        <div className="root">
+            <div className="main-container">
+                <div className="main-container-paper" style={{ padding: '20px' }}>
+                    <div className="navigation-top">
+                        <Grid item size={9}><Header /></Grid>
+                        <Grid item size={3}><CartWidget /></Grid>
+                    </div>
+                    <Grid container>
+                        <Grid item size={3}><Filter /></Grid>
+                        <Grid item size={9}>
+                            <Route exact path={'/'} render={(routerProps) => <ProductList {...routerProps} />} />
+                            <Route exact path={'/cart'} render={(routerProps) => <Cart {...routerProps} />} />
+                            <Route exact path={'/checkout'} render={(routerProps) => <Checkout {...routerProps} />} />
+                            <Route path={'/product/:id'} render={(routerProps) => <ProductDetails {...routerProps} />} />
+                        </Grid>
+                    </Grid>
+                </div>
 
-  <Container style={{minHeight: "700px"}}>
-      <Paper elevation={3} style={{padding: "20px"}}>
-    <Grid container alignItems="stretch" justify="center" spacing={3}>
-      <Grid item xs={9}><Header /></Grid>
-      <Grid item xs={3}><CartWidgetContainer /></Grid>
-    </Grid>
-    <Grid container spacing={3}>
-      <Grid item xs={3}><Sidebar/></Grid>
-      <Grid item xs={9}>
-        <Route exact path={"/"} render={(routerProps)=> <ProductList {...routerProps} />} />
-        <Route exact path={"/cart"} render={(routerProps)=><Cart {...routerProps} />} />
-        <Route exact path={"/checkout"} render={(routerProps)=><Checkout {...routerProps} />} />
-        <Route path={"/product/:id"} render={(routerProps)=><ProductDetails  {...routerProps} />} />
-      </Grid>
-    </Grid>
-    <Grid alignItems="flex-end" container spacing={3}>
-      <Grid item xs={12}><Footer/></Grid>
-    </Grid>
-      </Paper>
-  </Container>
+            </div>
+            <footer className="footer">
+                <Footer />
+            </footer>
 
-)
+        </div>
+);
 
-const mapStateToProps = ({ products, cart, cartTotal }) => {
-  return {
-    products,
-    cart: cart.cart,
-    cartTotal: cart.cartTotal
-  }
-}
 
-export default App
+const mapStateToProps = (state, props) => ({
+  products: state.products,
+  cart: state.cart.cart,
+  cartTotal: state.cart.cartTotal,
+});
+
+export default connect(mapStateToProps)(App);

@@ -1,119 +1,119 @@
-import { connect } from "react-redux"
+import { connect } from 'react-redux';
 import {
   ADD_TO_CART,
   DECREASE_CART_ITEM,
   FILTER_ITEMS,
   LOAD_PRODUCT_DETAILS,
   LOAD_PRODUCT_DETAILS_SUCCESS,
-  REMOVE_FROM_CART
-} from "../action/actions"
+  REMOVE_FROM_CART,
+} from '../action/actions';
 
 const mapStateToProps = (state, props) => {
-  const { cart, cartTotal } = state.cart
-  const { products } = state.products
+  const { cart, cartTotal } = state.cart;
+  const { products } = state.products;
   return {
     cart,
     products,
     cartTotal,
-    ...props
-  }
-}
+    ...props,
+  };
+};
 
 const mapFilterStateToProps = (state, props) => {
-  const { categories, filterList } = state.products
+  const { categories, filterList, isLoading } = state.products;
   return {
+    isLoading,
     categories,
-    filterList
-  }
-}
+    filterList,
+  };
+};
 
-const mapCartState = state => {
-  const { cart, cartTotal } = state.cart
+const mapCartState = (state) => {
+  const { cart, cartTotal } = state.cart;
   return {
     total: cartTotal,
-    count: cart.length
-  }
-}
+    count: cart.length,
+  };
+};
 
 const mapProductDetailsToProps = (state, props) => {
-  const { isLoading, product, productId } = state.products
-  console.log(state, props);
+  const { isLoading, product, productId } = state.products;
   return {
     product,
     productId,
-    isLoading
-  }
-}
+    isLoading,
+  };
+};
 
-const mapFilterDispatchToProps = dispatch => ({
-  filterItems: payload => dispatch({
+const mapFilterDispatchToProps = (dispatch) => ({
+  filterItems: (payload) => dispatch({
     type: FILTER_ITEMS,
-    payload
-  })
-})
+    payload,
+  }),
+});
 
-function loadprod (payload) {
-  return dispatch => {
+function loadprod(payload) {
+  return (dispatch) => {
     dispatch({
       type: LOAD_PRODUCT_DETAILS,
-      payload
-    })
+      payload,
+    });
 
     setTimeout(() => {
       dispatch({
         type: LOAD_PRODUCT_DETAILS_SUCCESS,
         payload: {
           id: 2,
-          name: "product2",
-          description: "product 2 description",
+          name: 'product2',
+          description: 'product 2 description',
           price: 200,
-          category: "cat2"
-        }
-      })
-    }, 2000)
-  }
+          category: 'cat2',
+        },
+      });
+    }, 2000);
+  };
 }
 
-const mapProductDispatchToProps = dispatch => ({
-  loadProductDetails: payload => dispatch(loadprod(payload))
-})
+const mapProductDispatchToProps = (dispatch) => ({
+  loadProductDetails: (payload) => dispatch(loadprod(payload)),
+});
 
-export const loadDetails = payload => ({
+export const loadDetails = (payload) => ({
   type: LOAD_PRODUCT_DETAILS,
-  payload
-})
+  payload,
+});
 
-const mapDispatchToProps = dispatch => ({
-  addToCart: payload => dispatch({
+const mapDispatchToProps = (dispatch) => ({
+  addToCart: (payload) => dispatch({
     type: ADD_TO_CART,
-    payload
+    payload,
   }),
-  removeFromCart: payload => dispatch({
+  removeFromCart: (payload) => dispatch({
     type: REMOVE_FROM_CART,
-    payload
+    payload,
   }),
-  decreaseItem: payload => dispatch({
+  decreaseItem: (payload) => dispatch({
     type: DECREASE_CART_ITEM,
-    payload
-  })
-})
+    payload,
+  }),
+});
 
-export const connectCartToStore = WrappedComponent => connect(
+export const connectCartToStore = (WrappedComponent) => connect(
   (state, props) => mapStateToProps(state, props),
-  mapDispatchToProps
-)(WrappedComponent)
+  mapDispatchToProps,
+)(WrappedComponent);
 
-export const connectCartWidgetToStore = CartWidget => connect(
-  state => mapCartState(state)
-)(CartWidget)
+export const connectCartWidgetToStore = (CartWidget) => connect(
+  (state) => mapCartState(state),
+)(CartWidget);
 
-export const connectFilterToStore = WrappedComponent => connect(
+export const connectFilterToStore = (WrappedComponent) => connect(
   (state, props) => mapFilterStateToProps(state, props),
-  mapFilterDispatchToProps
-)(WrappedComponent)
+  mapFilterDispatchToProps,
+)(WrappedComponent);
 
-export const connectProductDetailsToStore = WrappedComponent => connect(
+export const connectProductDetailsToStore = (WrappedComponent) => connect(
   (state, props) => mapProductDetailsToProps(state, props),
   // null,
-  mapProductDispatchToProps
-)(WrappedComponent)
+  mapProductDispatchToProps,
+)(WrappedComponent);

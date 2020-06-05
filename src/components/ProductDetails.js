@@ -1,53 +1,49 @@
-
-import React from "react"
-import { connectProductDetailsToStore } from "../hoc/ConnectHolder"
-import { connect } from "react-redux"
-import {LOAD_PRODUCT_DETAILS} from "../action/actions";
+import React from 'react';
+import { connect } from 'react-redux';
+import { LOAD_PRODUCT_DETAILS } from '../action/actions';
 
 class ProductDetails extends React.Component {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       product: {},
-      isLoading: true
-    }
+      isLoading: true,
+    };
   }
 
-  async componentDidMount () {
-    await this.loadProduct()
+  async componentDidMount() {
+    await this.loadProduct();
   }
 
-  async loadProduct () {
-    const id = this.props.match.params.id;
+  async loadProduct() {
+    const { id } = this.props.match.params;
     const product = this.props.dispatch({
       type: LOAD_PRODUCT_DETAILS,
-      payload: id
+      payload: id,
     });
-    console.log(product)
+    console.log(product);
     try {
       const product = this.props.location.state;
-      return await setTimeout(() => this.setState({ product, isLoading: false }), 1500)
+      return await setTimeout(() => this.setState({ product, isLoading: false }), 1500);
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
   }
 
-  render () {
-    const { isLoading, product } = this.state
+  render() {
+    const { isLoading, product } = this.state;
 
     return isLoading || !product ? <div> Загрузка... </div>
       : <div>
         <div>{product.name}</div>
         <div>{product.description}</div>
         <div>{product.price}</div>
-      </div>
-  }
-};
-
-const mapStateToProps = (state) => {
-  return {
-    ...state
+      </div>;
   }
 }
+
+const mapStateToProps = (state) => ({
+  ...state,
+});
 
 export default connect(mapStateToProps)(ProductDetails);

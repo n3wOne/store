@@ -1,6 +1,6 @@
-import React from "react"
-import Typography from "@material-ui/core/Typography";
-import Link from "@material-ui/core/Link";
+import React from 'react';
+import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
 
 
 function Copyright() {
@@ -16,6 +16,4 @@ function Copyright() {
   );
 }
 
-export const Footer = () => {
-  return <Copyright />
-}
+export const Footer = () => <Copyright />;

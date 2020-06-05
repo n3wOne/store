@@ -1,51 +1,61 @@
-import React from "react"
-import { Card as CardItem, Row,  Col } from "react-bootstrap"
-import { CART_ITEM } from "../Constants"
-import { Link } from "react-router-dom"
-import Grid from "@material-ui/core/Grid";
-import Button from '@material-ui/core/Button';
+import React from 'react';
+import { Card as CardItem, Row, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import Typography from '@material-ui/core/Typography';
+import { Cart, CART_ITEM } from '../Constants';
+// import Grid from "@material-ui/core/Grid";
+import Grid from './Grid';
 
-const cartTemplate = ({ product, text, onClickFunction, decreaseItem, addToCart, itemCount }) => {
-  return (<Grid container xs={12}>
-    <Col>{product.name}</Col>
-    <Col>{product.description}</Col>
-    <Col>{product.price} руб.</Col>
-    <Col><Button onClick={() => decreaseItem(product)} variant="outlined" color="primary"> - </Button></Col>
-    <Col>{itemCount}</Col>
-    <Col><Button onClick={() => addToCart(product)} variant="outlined" color="primary"> + </Button></Col>
-    <Col><Button onClick={onClickFunction} variant="outlined" color="primary">{text}</Button></Col>
-  </Grid>)
-}
-
-const cardTemplate = ({ product, text, onClickFunction, category }) => (
-  <Grid container xs={12} spacing={3}>
-    <Grid item xs={12}>{category}</Grid>
-    <Grid container xs={12}>
-      <Grid item xs={12}>
-        <Link to={{
-          pathname: `/product/${product.id}`,
-          state: product
-        }}>
-          {product.name}
-        </Link>
-      </Grid>
-      <Grid item xs={12}><img src={product.imgUrl} alt=""/></Grid>
-      <Grid item xs={12}>{product.description}</Grid>
-      <Grid item xs={12}>{product.price} руб.</Grid>
+const cartTemplate = ({
+  product, text, onClickFunction, decreaseItem, addToCart, itemCount,
+}) => (<Grid className="product-row" container size={12}>
+    <Grid className="prod-title">{product.name}</Grid>
+    <Grid className="prod-descr">{product.description}</Grid>
+    <Grid>{product.price} руб.</Grid>
+    <Grid>
+      <button onClick={() => decreaseItem(product)}> - </button>
+       <span className="item-count">{itemCount}</span>
+      <button onClick={() => addToCart(product)}> + </button>
     </Grid>
-    <Grid item xs={12}><Button onClick={onClickFunction} variant="outlined" color="primary">{text}</Button></Grid>
-  </Grid>
-)
+    <Grid>{itemCount * product.price}</Grid>
+    <Grid><button onClick={onClickFunction}>{text}</button></Grid>
+  </Grid>);
 
-export const CartItem = ({ product, addToCart, removeFromCart, productInCart, type, decreaseItem, itemCount, category }) => {
-  const text = productInCart ? "Remove From Cart" : "Add To Cart"
+const cardTemplate = ({
+  product, text, onClickFunction, category,
+}) => (
+    <div className="product-list-item">
+      <div className="prod-body">
+        <div className="prod-img">
+          <img src={product.imgUrl} alt="" />
+        </div>
+        <div className="prod-title">
+          <Link to={{
+            pathname: `/product/${product.id}`,
+            state: product,
+          }}>
+            {product.name}
+          </Link>
+        </div>
+        <div className="prod-descr">{product.description}</div>
+      </div>
+      <div className="prod-footer">
+        <div className="prod-price">{product.price} руб.</div>
+        <button className="prod-add-to-cart-button" onClick={onClickFunction}>{text}</button>
+      </div>
+    </div>
+);
+
+export const CartItem = ({
+  product, addToCart, removeFromCart, productInCart, type, decreaseItem, itemCount, category,
+}) => {
+  const text = productInCart ? Cart.REMOVE_FROM_CART : Cart.ADD_TO_CART;
   const onClickFunction = () => {
     if (type === CART_ITEM) {
-      return removeFromCart(product)
-    } else {
-      return productInCart ? removeFromCart(product) : addToCart(product)
+      return removeFromCart(product);
     }
-  }
+    return productInCart ? removeFromCart(product) : addToCart(product);
+  };
 
   const itemObject = {
     itemCount,
@@ -54,8 +64,8 @@ export const CartItem = ({ product, addToCart, removeFromCart, productInCart, ty
     addToCart,
     product,
     text,
-    onClickFunction
-  }
+    onClickFunction,
+  };
 
-  return type === CART_ITEM ? cartTemplate(itemObject) : cardTemplate(itemObject)
-}
+  return type === CART_ITEM ? cartTemplate(itemObject) : cardTemplate(itemObject);
+};
