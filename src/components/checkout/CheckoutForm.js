@@ -64,7 +64,7 @@ const CheckoutForm = (props) => {
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
               <TextField
-                // required
+                required
                 id="firstName"
                 name="firstName"
                 onChange={handleInputChange}
@@ -75,7 +75,7 @@ const CheckoutForm = (props) => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                // required
+                required
                 id="lastName"
                 name="lastName"
                 onChange={handleInputChange}
@@ -86,7 +86,7 @@ const CheckoutForm = (props) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                // required
+                required
                 id="address"
                 name="address"
                 onChange={handleInputChange}
@@ -139,7 +139,7 @@ const CheckoutForm = (props) => {
 
             <Grid item xs={12} className="filter-item">
               <input
-                // required
+                required
                 type="checkbox"
                 className="filter-item-checkbox"
                 name="agreement"
