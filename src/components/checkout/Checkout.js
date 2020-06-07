@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import CheckoutForm from "./CheckoutForm";
 import { connectToStore } from "../../hoc/ConnectHolder";
-import { CheckoutText } from "../../Constants";
+import { CheckoutText, CART_IS_EMPTY } from "../../Constants";
 
 const thanks = (order) => (
   <>
