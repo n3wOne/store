@@ -1,5 +1,10 @@
-import _ from 'loadsh';
-import { ADD_TO_CART, DECREASE_CART_ITEM, REMOVE_FROM_CART } from '../action/actions';
+import _ from "loadsh";
+import {
+  ADD_TO_CART,
+  DECREASE_CART_ITEM,
+  REMOVE_FROM_CART,
+  CLEAR_CART,
+} from "../action/actions";
 
 const initialState = {
   cart: [],
@@ -12,9 +17,13 @@ export function CartReducer(state = initialState, action) {
     case ADD_TO_CART:
       return newCartState([...state.cart, action.payload]);
     case REMOVE_FROM_CART:
-      return newCartState([...state.cart.filter((item) => item.id !== action.payload.id)]);
+      return newCartState([
+        ...state.cart.filter((item) => item.id !== action.payload.id),
+      ]);
     case DECREASE_CART_ITEM:
       return decreaseItem(state, action);
+    case CLEAR_CART:
+      return initialState;
     default:
       return state;
   }
@@ -22,11 +31,15 @@ export function CartReducer(state = initialState, action) {
 
 const decreaseItem = (state, action) => {
   const newState = state.cart;
-  _.remove(newState, (item, index) => index === _.findLastIndex(state.cart, action.payload));
+  _.remove(
+    newState,
+    (item, index) => index === _.findLastIndex(state.cart, action.payload)
+  );
   return newCartState(newState);
 };
 
-const getCartTotal = (cart) => cart.reduce((total, product) => total + product.price, 0);
+const getCartTotal = (cart) =>
+  cart.reduce((total, product) => total + product.price, 0);
 
 const newCartState = (state) => ({
   cart: state,

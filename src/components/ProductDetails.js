@@ -1,6 +1,6 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { LOAD_PRODUCT_DETAILS } from '../action/actions';
+import React from "react";
+import { connect } from "react-redux";
+import { LOAD_PRODUCT_DETAILS } from "../action/actions";
 
 class ProductDetails extends React.Component {
   constructor(props) {
@@ -23,7 +23,10 @@ class ProductDetails extends React.Component {
     });
     try {
       const product = this.props.location.state;
-      return await setTimeout(() => this.setState({ product, isLoading: false }), 500);
+      return await setTimeout(
+        () => this.setState({ product, isLoading: false }),
+        500
+      );
     } catch (e) {
       console.log(e);
     }
@@ -32,12 +35,15 @@ class ProductDetails extends React.Component {
   render() {
     const { isLoading, product } = this.state;
 
-    return isLoading || !product ? <div> Загрузка... </div>
-      : <div>
+    return isLoading || !product ? (
+      <div> Загрузка... </div>
+    ) : (
+      <div>
         <div>{product.name}</div>
         <div>{product.description}</div>
         <div>{product.price}</div>
-      </div>;
+      </div>
+    );
   }
 }
 

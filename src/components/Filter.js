@@ -1,5 +1,5 @@
-import React from 'react';
-import { connectFilterToStore } from '../hoc/ConnectHolder';
+import React from "react";
+import { connectFilterToStore } from "../hoc/ConnectHolder";
 
 const Filter = (props) => {
   const { categories, filterItems, filterList } = props;
@@ -13,11 +13,21 @@ const Filter = (props) => {
       : filterItems(filterList.filter((item) => item !== name));
   };
 
-  const prepareChildren = categories && categories.map((item) => (
+  const prepareChildren =
+    categories &&
+    categories.map((item) => (
       <li key={item.key} className="filter-item">
-        <input type="checkbox" className="filter-item-checkbox" onChange={handleChange} name={item.key} />
-        <label className="filter-item-label" htmlFor={item.key}>{item.value}</label> </li>
-  ));
+        <input
+          type="checkbox"
+          className="filter-item-checkbox"
+          onChange={handleChange}
+          name={item.key}
+        />
+        <label className="filter-item-label" htmlFor={item.key}>
+          {item.value}
+        </label>
+      </li>
+    ));
   return <ul className="filter-root">{prepareChildren}</ul>;
 };
 

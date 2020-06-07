@@ -16,6 +16,7 @@ export const Menu = {
 export const CURRENCY = 'руб.';
 export const CART_TOTAL = 'Общая сумма';
 export const ORDER_BUTTON = 'Оформить заказ';
+export const CART_IS_EMPTY = 'Корзина пуста!';
 
 export const COMPANY_NAME = 'Ферма «Ивановка»';
 
@@ -38,6 +39,7 @@ export const CheckOutForm = {
   address: 'Адрес',
   tel: 'Контактный телефон',
   email: 'email',
+  comment: 'Коментарий к заказу',
   total: 'Общая сумма заказа',
   agreement: 'Я даю согласие на обработку своих персональных данных',
 };

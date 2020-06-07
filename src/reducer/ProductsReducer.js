@@ -1,8 +1,12 @@
-import { categories, data2 as data } from '../data/mockData';
-import { FILTER_ITEMS, LOAD_PRODUCT_DETAILS, LOAD_PRODUCT_DETAILS_SUCCESS } from '../action/actions';
+import { categories, data2 as data } from "../data/mockData";
+import {
+  FILTER_ITEMS,
+  LOAD_PRODUCT_DETAILS,
+  LOAD_PRODUCT_DETAILS_SUCCESS,
+} from "../action/actions";
 
-export const LOAD_PRODUCT_LIST_SUCCESS = 'LOAD_PRODUCT_LIST_SUCCESS';
-export const LOAD_PRODUCT_LIST = 'LOAD_PRODUCT_LIST';
+export const LOAD_PRODUCT_LIST_SUCCESS = "LOAD_PRODUCT_LIST_SUCCESS";
+export const LOAD_PRODUCT_LIST = "LOAD_PRODUCT_LIST";
 
 const initialState = {
   products: [],
@@ -26,7 +30,6 @@ export function ProductReducer(state = initialState, action) {
     case FILTER_ITEMS:
       return { ...state, filterList: action.payload };
     case LOAD_PRODUCT_DETAILS:
-      // return { ...state, product_id: action.payload, isLoading: true }
       return loadProduct(state, action.payload);
     case LOAD_PRODUCT_DETAILS_SUCCESS:
       return { ...state, product: action.payload, isLoading: false };

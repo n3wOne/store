@@ -325,12 +325,11 @@ input{
 
 
 input.filter-item-checkbox{
-    width: auto;
-    flex: 1;
+    flex-basis: 30px;
 }
 
 .filter-item-label{
-    flex: 5;
+    flex: 1;
 }
 
 .filter-root{
@@ -342,7 +341,6 @@ input.filter-item-checkbox{
 .filter-item{
     list-style-type: none;
     display: flex;
-    flex: 1;
     padding: 10px;
     -webkit-flex-wrap: wrap;
     -ms-flex-wrap: wrap;
