@@ -1,7 +1,5 @@
 import { createStore, applyMiddleware, combineReducers, compose } from "redux";
 import { connectRouter, routerMiddleware } from "connected-react-router";
-import thunk from "redux-thunk";
-import logger from "redux-logger";
 import createHistory from "history/createBrowserHistory";
 import { ProductReducer } from "../reducer/ProductsReducer";
 import { CartReducer } from "../reducer/CartReducer";
@@ -14,11 +12,6 @@ const reducers = combineReducers({
   cart: CartReducer,
   router: connectRouter(history),
 });
-//
-// const middleware = [
-//   routerMiddleware(history),
-//   // logger,
-// ];
 
 const composedEnhancers = compose(applyMiddleware(routerMiddleware(history)));
 
