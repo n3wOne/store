@@ -21,10 +21,6 @@ const StyledDiv = styled("div")`
 `;
 
 export default class Grid extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   calcSize = (size) => {
     switch (size) {
       case "auto":

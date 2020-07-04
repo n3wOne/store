@@ -10,6 +10,7 @@ export const LOAD_PRODUCT_LIST = "LOAD_PRODUCT_LIST";
 
 const initialState = {
   products: [],
+  productsList: new Map([]),
   categories,
   filterList: [],
   isLoading: true,
@@ -17,8 +18,13 @@ const initialState = {
 };
 
 const loadProduct = (state, id) => {
-  const product = data.filter((item) => item.id === id);
-  return { ...state, product };
+  return { ...state, product: state.productsList.get(id) };
+};
+
+const productsToMap = (products) => {
+  const productsList = new Map([]);
+  products.forEach((product) => productsList.set(product.id, product));
+  return productsList;
 };
 
 export function ProductReducer(state = initialState, action) {
@@ -26,7 +32,12 @@ export function ProductReducer(state = initialState, action) {
     case LOAD_PRODUCT_LIST:
       return { ...state, productIsLoading: true };
     case LOAD_PRODUCT_LIST_SUCCESS:
-      return { ...state, products: action.payload, productIsLoading: false };
+      return {
+        ...state,
+        products: action.payload,
+        productsList: productsToMap(action.payload),
+        productIsLoading: false,
+      };
     case FILTER_ITEMS:
       return { ...state, filterList: action.payload };
     case LOAD_PRODUCT_DETAILS:

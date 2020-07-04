@@ -1,6 +1,6 @@
 import React from "react";
-import { connect } from "react-redux";
-import { LOAD_PRODUCT_DETAILS } from "../action/actions";
+import PropTypes from "prop-types";
+import { connectProductDetailsToStore } from "../hoc/ConnectHolder";
 
 class ProductDetails extends React.Component {
   constructor(props) {
@@ -11,33 +11,20 @@ class ProductDetails extends React.Component {
     };
   }
 
-  async componentDidMount() {
-    await this.loadProduct();
+  componentDidMount() {
+    this.loadProduct();
   }
 
-  async loadProduct() {
+  loadProduct() {
     const { id } = this.props.match.params;
-    const product = this.props.dispatch({
-      type: LOAD_PRODUCT_DETAILS,
-      payload: id,
-    });
-    try {
-      const product = this.props.location.state;
-      return await setTimeout(
-        () => this.setState({ product, isLoading: false }),
-        500
-      );
-    } catch (e) {
-      console.log(e);
-    }
+    const { loadProductInfo } = this.props;
+    loadProductInfo(parseInt(id));
+    this.setState({ isLoading: false });
   }
 
-  render() {
-    const { isLoading, product } = this.state;
-
-    return isLoading || !product ? (
-      <div> Загрузка... </div>
-    ) : (
+  renderProductDetailsTemplate() {
+    const { product } = this.props.products;
+    return (
       <div>
         <div>{product.name}</div>
         <div>{product.description}</div>
@@ -45,10 +32,27 @@ class ProductDetails extends React.Component {
       </div>
     );
   }
+
+  render() {
+    const { isLoading } = this.state;
+    const { product } = this.props.products;
+
+    return (
+      <div className="product-details">
+        {isLoading || !product
+          ? "Загрузка..."
+          : this.renderProductDetailsTemplate()}
+      </div>
+    );
+  }
 }
 
-const mapStateToProps = (state) => ({
-  ...state,
-});
+export default connectProductDetailsToStore(ProductDetails);
 
-export default connect(mapStateToProps)(ProductDetails);
+ProductDetails.propTypes = {
+  id: PropTypes.number,
+  match: PropTypes.object,
+  products: PropTypes.object,
+  product: PropTypes.object,
+  loadProductInfo: PropTypes.func,
+};

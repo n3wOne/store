@@ -1,8 +1,11 @@
+export const REQUEST_URL = "http://vk.ferma-ivanovka.ru/fetchquery.php";
 export const CART_ITEM = "cartItem";
 export const CARD_ITEM = "cardItem";
 export const LOADING = "Загрузка данных";
 export const WEB_SITE = " Your Website";
-export const COPYRIGHT = "Copyright © ";
+export const WEB_SITE_LINK = "https://ferma-ivanovka.ru";
+export const COPYRIGHT = "© ";
+export const COMPANY_NAME = "Ферма «Ивановка»";
 export const Cart = {
   ADD_TO_CART: "Добавить",
   REMOVE_FROM_CART: "Убрать",
@@ -20,8 +23,6 @@ export const CURRENCY = "руб.";
 export const CART_TOTAL = "Общая сумма";
 export const ORDER_BUTTON = "Оформить заказ";
 export const CART_IS_EMPTY = "Корзина пуста!";
-
-export const COMPANY_NAME = "Ферма «Ивановка»";
 
 export const ORDER_SUMMARY = "Ваш заказ: ";
 

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
+import PropTypes from "prop-types";
 // import Grid from "../Grid";
 import TextField from "@material-ui/core/TextField";
 import {
@@ -7,10 +8,21 @@ import {
   ORDER_SUMMARY,
   CheckOutForm,
   CheckoutText,
+  CART_IS_EMPTY,
 } from "../../Constants";
 
 const CheckoutForm = (props) => {
+  const {
+    handleSubmitForm,
+    removeProductFromCart,
+    cartTotal,
+    cartItems,
+  } = props;
+
   const [inputData, handleChange] = useState({});
+  const [agreement, handleAgreement] = useState(false);
+
+  const submitDisabled = !cartItems.size > 0 || !agreement;
 
   const handleInputChange = (event) => {
     const { target } = event;
@@ -21,12 +33,13 @@ const CheckoutForm = (props) => {
     });
   };
 
-  const orderSummary = () => {
-    const { cart } = props;
-    const cartItems = [...new Set(cart)];
-    const prepareChildren = cartItems.map((product) => {
-      const itemsCount = cart.filter((cartItem) => cartItem.id === product.id)
-        .length;
+  const validateForm = (event) => {
+    event.preventDefault();
+    handleSubmitForm(inputData);
+  };
+
+  const renderOrderSummary = () => {
+    const prepareChildren = [...cartItems.values()].map((product) => {
       return (
         <li key={product.id} className="order-summary-li">
           <div className="order-summary-item">
@@ -35,13 +48,13 @@ const CheckoutForm = (props) => {
               {product.description}
             </p>
           </div>
-          <div className="order-summary-summ">X {itemsCount}</div>
+          <div className="order-summary-summ">X {product.count}</div>
           <div className="order-summary-item-total">
-            {product.price * itemsCount} {CURRENCY}
+            {product.price * product.count} {CURRENCY}
           </div>
           <div
             className="order-summary-delete-item"
-            onClick={() => props.removeFromCart(product)}
+            onClick={() => removeProductFromCart(product.id)}
           >
             X
           </div>
@@ -52,9 +65,23 @@ const CheckoutForm = (props) => {
     return <ul className="order-summary-root">{prepareChildren}</ul>;
   };
 
+  const renderCartTotal = () => {
+    return (
+      <div>
+        {renderOrderSummary()}
+        <div className="order-summary-root order-summary-total">
+          <div className="order-summary-item">{CheckOutForm.total}</div>
+          <p>
+            {cartTotal} {CURRENCY}
+          </p>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <main className="checkout-form-main">
-      <form onSubmit={(event) => event.preventDefault()}>
+      <form method="post" onSubmit={(event) => validateForm(event)}>
         <div
           className="main-container-paper"
           style={{ padding: "20px", marginTop: "10px", marginBottom: "20px" }}
@@ -64,7 +91,7 @@ const CheckoutForm = (props) => {
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
               <TextField
-                required
+                required={true}
                 id="firstName"
                 name="firstName"
                 onChange={handleInputChange}
@@ -75,7 +102,7 @@ const CheckoutForm = (props) => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                required
+                required={true}
                 id="lastName"
                 name="lastName"
                 onChange={handleInputChange}
@@ -86,7 +113,6 @@ const CheckoutForm = (props) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                required
                 id="address"
                 name="address"
                 onChange={handleInputChange}
@@ -99,6 +125,7 @@ const CheckoutForm = (props) => {
               <TextField
                 id="tel"
                 name="tel"
+                required={true}
                 onChange={handleInputChange}
                 label={CheckOutForm.tel}
                 fullWidth
@@ -128,18 +155,18 @@ const CheckoutForm = (props) => {
 
             <Grid item xs={12}>
               <h2>{ORDER_SUMMARY}</h2>
-              {orderSummary()}
-              <div className="order-summary-root order-summary-total">
-                <div className="order-summary-item">{CheckOutForm.total}</div>
-                <p>
-                  {props.cart.cartTotal} {CURRENCY}
-                </p>
-              </div>
+              {cartItems.size > 0 ? (
+                renderCartTotal()
+              ) : (
+                <div>{CART_IS_EMPTY}</div>
+              )}
             </Grid>
 
             <Grid item xs={12} className="filter-item">
               <input
-                required
+                required={true}
+                checked={agreement}
+                onChange={(event) => handleAgreement(event.target.checked)}
                 type="checkbox"
                 className="filter-item-checkbox"
                 name="agreement"
@@ -150,7 +177,7 @@ const CheckoutForm = (props) => {
             </Grid>
           </Grid>
           <div className="place-order">
-            <button onClick={() => props.handleSubmitForm(inputData)}>
+            <button type="submit" disabled={submitDisabled}>
               {CheckoutText.PLACE_ORDER}
             </button>
           </div>
@@ -160,4 +187,18 @@ const CheckoutForm = (props) => {
   );
 };
 
+CheckOutForm.propTypes = {
+  handleSubmitForm: PropTypes.func,
+  cartItems: PropTypes.array,
+  cartTotal: PropTypes.number,
+  clearCart: PropTypes.func,
+};
+
 export default CheckoutForm;
+
+CheckoutForm.propTypes = {
+  cartItems: PropTypes.object,
+  cartTotal: PropTypes.number,
+  handleSubmitForm: PropTypes.func,
+  removeProductFromCart: PropTypes.func,
+};

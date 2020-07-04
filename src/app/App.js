@@ -23,19 +23,32 @@ const App = () => (
             <CartWidget />
           </Grid>
         </div>
-        <Grid container>
-          <Grid item size={3}>
-            <Filter />
-          </Grid>
-          <Grid item size={9}>
-            <Switch>
-              <Route exact path={"/"} render={() => <ProductList />} />
-              <Route exact path={"/cart"} render={() => <CartContainer />} />
-              <Route exact path={"/checkout"} render={() => <Checkout />} />
-              <Route path={"/product/:id"} render={() => <ProductDetails />} />
-              <ProductList />
-            </Switch>
-          </Grid>
+        <Grid container size={12}>
+          <Switch>
+            <Route exact path={"/"}>
+              <Grid item size={3}>
+                <Filter />
+              </Grid>
+              <Grid item size={9}>
+                <ProductList />
+              </Grid>
+            </Route>
+            <Route
+              exact
+              path={"/cart"}
+              render={() => (
+                <Grid item size={12}>
+                  <CartContainer />
+                </Grid>
+              )}
+            />
+            <Route exact path={"/checkout"} render={() => <Checkout />} />
+            <Route
+              path={"/product/:id"}
+              render={(routerProps) => <ProductDetails {...routerProps} />}
+            />
+            <ProductList />
+          </Switch>
         </Grid>
       </div>
     </div>

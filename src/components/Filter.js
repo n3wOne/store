@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connectFilterToStore } from "../hoc/ConnectHolder";
 
 const Filter = (props) => {
@@ -8,7 +9,7 @@ const Filter = (props) => {
     const { target } = event;
     const value = target.checked;
     const { name } = target;
-    value
+    return value
       ? filterItems([...filterList, name])
       : filterItems(filterList.filter((item) => item !== name));
   };
@@ -32,3 +33,9 @@ const Filter = (props) => {
 };
 
 export default connectFilterToStore(Filter);
+
+Filter.propTypes = {
+  categories: PropTypes.array,
+  filterItems: PropTypes.func,
+  filterList: PropTypes.array,
+};

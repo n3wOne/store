@@ -6,8 +6,9 @@ import LocalAtmIcon from "@material-ui/icons/LocalAtm";
 import { Link } from "react-router-dom";
 import Badge from "@material-ui/core/Badge";
 import Grid from "@material-ui/core/Grid";
+import PropTypes from "prop-types";
 import { connectCartWidgetToStore } from "../hoc/ConnectHolder";
-import { ROUTE_TO_CART } from "../Constants";
+import {CURRENCY, ROUTE_TO_CART} from "../Constants";
 
 const StyledBadge = withStyles((theme) => ({
   badge: {
@@ -17,8 +18,10 @@ const StyledBadge = withStyles((theme) => ({
 }))(Badge);
 
 function CartWidget(props) {
+  const { count, total } = props;
   return (
     <Grid
+      className={"cart"}
       key={"cart-widget"}
       container
       justify={"center"}
@@ -32,7 +35,7 @@ function CartWidget(props) {
                 vertical: "top",
                 horizontal: "right",
               }}
-              badgeContent={props.count}
+              badgeContent={count}
               color="secondary"
             >
               <ShoppingCartIcon />
@@ -41,10 +44,15 @@ function CartWidget(props) {
         </Link>
       </Grid>
       <Grid item>
-        <LocalAtmIcon /> {props.total} руб.
+        <LocalAtmIcon /> {total} {CURRENCY}
       </Grid>
     </Grid>
   );
 }
 
 export default connectCartWidgetToStore(CartWidget);
+
+CartWidget.propTypes = {
+  count: PropTypes.number,
+  total: PropTypes.number,
+};

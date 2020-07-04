@@ -1,31 +1,31 @@
 import { connect } from "react-redux";
 import {
-  ADD_TO_CART,
-  DECREASE_CART_ITEM,
-  FILTER_ITEMS,
-  REMOVE_FROM_CART,
-  CLEAR_CART,
+  removeProductFromCart,
+  setCartItemCount,
+  addProductToCart,
+  clearCart,
+  filterItems,
+  loadProductListStart,
+  loadProductListSuccess,
+  loadProductDetails,
 } from "../action/actions";
-import {
-  LOAD_PRODUCT_LIST,
-  LOAD_PRODUCT_LIST_SUCCESS,
-} from "../reducer/ProductsReducer";
 
 const mapStateToProps = (state) => {
   const { cart, products } = state;
   return {
     isLoading: products.productIsLoading,
     products,
-    cart: cart.cart,
+    productsList: products.productsList,
     cartTotal: cart.cartTotal,
+    cartItems: cart.cartItems,
   };
 };
 
 const mapCartStateToProps = (state) => {
-  const { cart, cartTotal } = state.cart;
+  const { cartTotal, cartItems } = state.cart;
   return {
     total: cartTotal,
-    count: cart.length,
+    cartItems,
   };
 };
 
@@ -39,42 +39,22 @@ const mapFilterStateToProps = (state) => {
 };
 
 const mapFilterDispatchToProps = (dispatch) => ({
-  filterItems: (payload) =>
-    dispatch({
-      type: FILTER_ITEMS,
-      payload,
-    }),
+  filterItems: (payload) => dispatch(filterItems(payload)),
+});
+
+const mapProductDispatchToProps = (dispatch) => ({
+  loadProductInfo: (payload) =>
+    dispatch(loadProductDetails(payload)),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addToCart: (payload) =>
-    dispatch({
-      type: ADD_TO_CART,
-      payload,
-    }),
-  removeFromCart: (payload) =>
-    dispatch({
-      type: REMOVE_FROM_CART,
-      payload,
-    }),
-  decreaseItem: (payload) =>
-    dispatch({
-      type: DECREASE_CART_ITEM,
-      payload,
-    }),
-  clearCart: () =>
-    dispatch({
-      type: CLEAR_CART,
-    }),
-  loadProductListStart: () =>
-    dispatch({
-      type: LOAD_PRODUCT_LIST,
-    }),
+  removeProductFromCart: (payload) => dispatch(removeProductFromCart(payload)),
+  setCartItemCount: (payload) => dispatch(setCartItemCount(payload)),
+  addProductToCart: (payload) => dispatch(addProductToCart(payload)),
+  clearCart: () => dispatch(clearCart()),
+  loadProductListStart: () => dispatch(loadProductListStart()),
   loadProductListSuccess: (payload) =>
-    dispatch({
-      type: LOAD_PRODUCT_LIST_SUCCESS,
-      payload,
-    }),
+    dispatch(loadProductListSuccess(payload)),
 });
 
 export const connectToStore = (WrappedComponent) =>
@@ -85,6 +65,9 @@ export const connectToStore = (WrappedComponent) =>
 
 export const connectCartWidgetToStore = (CartWidget) =>
   connect((state) => mapCartStateToProps(state))(CartWidget);
+
+export const connectProductDetailsToStore = (ProductDetails) =>
+  connect((state) => state, mapProductDispatchToProps)(ProductDetails);
 
 export const connectFilterToStore = (WrappedComponent) =>
   connect(

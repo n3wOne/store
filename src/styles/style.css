@@ -89,6 +89,13 @@ button{
     border-image: initial;
 }
 
+button:disabled{
+    color: rgba(16, 16, 16, 0.3);
+    border-color: rgba(118, 118, 118, 0.3);
+    background-color: rgba(239, 239, 239, 0.3);
+    cursor: default;
+}
+
 .main-container{
     width: 100%;
     display: block;
@@ -177,32 +184,12 @@ input{
     -webkit-tap-highlight-color: transparent;
 }
 
-.product-row{
-    display: flex;
-    flex-flow: row;
-}
-
-.product-row div{
-    flex: 1;
-}
-
-.product-row button{
-    height: 30px;
-    line-height: 30px;
-}
-
 .cart-container{
     padding: 10px;
     display: flex;
     flex-direction: column;
 }
 
-.cart-container .product-row{
-    padding: 15px;
-    background: rgba(255, 105, 0, 0.05);
-    margin: 10px 0;
-    align-items: center;
-}
 
 .item-count{
     margin: 0 15px;
@@ -310,6 +297,11 @@ input{
     padding: 10px;
 }
 
+.order-warning{
+    font-size: 13px;
+    font-weight: bold;
+}
+
 .text{
     font-size: 1rem;
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
@@ -347,3 +339,64 @@ input.filter-item-checkbox{
     flex-wrap: wrap;
 }
 
+@media (min-width: 632px) {
+    .cart, .product-details {
+        width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .order-success{
+        width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.product-item-img{
+    height: 80px;
+    margin: 0 10px;
+}
+
+.product-item-total{
+    /*width: 100px;*/
+}
+
+.product-item-title{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.product-item-price{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.product-item-control{
+    flex-basis: 100px;
+    align-items: center;
+}
+
+.product-row{
+    display: flex;
+    flex-flow: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.product-row div{
+    padding: 0 5px;
+    display: flex;
+    justify-content: center;
+}
+
+.product-row button{
+    height: 30px;
+    line-height: 30px;
+}
+
+.product-row{
+    padding: 5px;
+    background: rgba(255, 105, 0, 0.05);
+    /*margin: 10px 0;*/
+    align-items: center;
+}

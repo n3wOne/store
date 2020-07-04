@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { CartItem } from "../components/CartItem";
 import {
@@ -12,29 +13,32 @@ import { connectToStore } from "../hoc/ConnectHolder";
 
 const CartContainer = (props) => {
   const prepareChildren = () => {
-    const { cart, addToCart, removeFromCart, decreaseItem } = props;
-    const productInCart = (item) => props.cart.includes(item);
-    if (!cart) return <div>В корзине ничего нет</div>;
-    const cartItems = [...new Set(cart)];
-    return cartItems.map((item) => {
-      const itemsCount = cart.filter((cartItem) => cartItem.id === item.id)
-        .length;
+    const {
+      cartItems,
+      addProductToCart,
+      setCartItemCount,
+      removeProductFromCart,
+    } = props;
+
+    const productInCart = (item) => cartItems.has(item.id);
+    if (!cartItems.size > 0) return <div>В корзине ничего нет</div>;
+    return [...cartItems.values()].map((item) => {
       return (
         <CartItem
           key={item.id}
-          itemCount={itemsCount}
-          decreaseItem={decreaseItem}
+          itemCount={item.count}
+          setCartItemCount={setCartItemCount}
+          removeProductFromCart={removeProductFromCart}
+          addProductToCart={addProductToCart}
           type={CART_ITEM}
           productInCart={productInCart(item)}
-          addToCart={addToCart}
-          removeFromCart={removeFromCart}
           product={item}
         />
       );
     });
   };
   return (
-    <div className="cart-container">
+    <div className="cart-container cart">
       {prepareChildren()}
       <div className="cart-total">
         {CART_TOTAL}: {props.cartTotal} {CURRENCY}
@@ -49,3 +53,14 @@ const CartContainer = (props) => {
 };
 
 export default connectToStore(CartContainer);
+
+CartContainer.propTypes = {
+  cartTotal: PropTypes.number,
+  decreaseItem: PropTypes.func,
+  increaseItemCount: PropTypes.func,
+  addProductToCart: PropTypes.func,
+  setCartItemCount: PropTypes.func,
+  cartItems: PropTypes.object,
+  productsList: PropTypes.object,
+  removeProductFromCart: PropTypes.func,
+};

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { CartItem } from "../components/CartItem";
 import { CARD_ITEM, LOADING } from "../Constants";
 import { data2 as data } from "../data/mockData";
@@ -24,12 +25,18 @@ class ProductList extends Component {
 
   prepareChildren() {
     const { products, filterList, categories } = this.props.products;
-    const { addToCart, removeFromCart, cart } = this.props;
-    const productInCart = (item) => cart.includes(item);
+    const {
+      cartItems,
+      addProductToCart,
+      removeProductFromCart,
+      setCartItemCount,
+    } = this.props;
+    const productInCart = (item) => cartItems.has(item);
     const props = {
       type: CARD_ITEM,
-      addToCart,
-      removeFromCart,
+      addProductToCart,
+      removeProductFromCart,
+      setCartItemCount,
     };
     const filterProducts =
       products &&
@@ -48,7 +55,7 @@ class ProductList extends Component {
             categories.findIndex((findItem) => findItem.key === item.category)
           ].value
         }
-        productInCart={productInCart(item)}
+        productInCart={productInCart(item.id)}
         product={item}
       />
     ));
@@ -65,3 +72,19 @@ class ProductList extends Component {
 }
 
 export default connectToStore(ProductList);
+
+ProductList.propTypes = {
+  isLoading: PropTypes.bool,
+  loadProductListStart: PropTypes.func,
+  loadProductListSuccess: PropTypes.func,
+  cart: PropTypes.object,
+  addProductToCart: PropTypes.func,
+  cartItems: PropTypes.object,
+  removeProductFromCart: PropTypes.func,
+  setCartItemCount: PropTypes.func,
+  products: PropTypes.object,
+  filterList: PropTypes.array,
+  categories: PropTypes.array,
+  count: PropTypes.number,
+  total: PropTypes.number,
+};

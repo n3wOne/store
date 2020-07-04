@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Cart, CART_ITEM } from "../Constants";
 import Grid from "./Grid";
@@ -7,27 +8,35 @@ const cartTemplate = ({
   product,
   text,
   onClickFunction,
-  decreaseItem,
-  addToCart,
   itemCount,
+  setCartItemCount,
 }) => (
   <Grid className="product-row" container size={12}>
-    <Grid className="prod-title">{product.name}</Grid>
-    <Grid className="prod-descr">{product.description}</Grid>
-    <Grid>{product.price} руб.</Grid>
-    <Grid>
-      <button onClick={() => decreaseItem(product)}> - </button>
+    <img className="product-item-img" src={product.imgUrl} alt="" />
+    <div className="product-item-title">{product.name}</div>
+    <div className="product-item-control">
+      <button
+        onClick={() => setCartItemCount({ ...product, count: --itemCount })}
+      >
+        {" "}
+        -{" "}
+      </button>
       <span className="item-count">{itemCount}</span>
-      <button onClick={() => addToCart(product)}> + </button>
-    </Grid>
-    <Grid>{itemCount * product.price}</Grid>
-    <Grid>
+      <button
+        onClick={() => setCartItemCount({ ...product, count: ++itemCount })}
+      >
+        {" "}
+        +{" "}
+      </button>
+    </div>
+    <div className="product-item-total">{itemCount * product.price}</div>
+    <div className="product-item-button">
       <button onClick={onClickFunction}>{text}</button>
-    </Grid>
+    </div>
   </Grid>
 );
 
-const cardTemplate = ({ product, text, onClickFunction, category }) => (
+const cardTemplate = ({ product, text, onClickFunction }) => (
   <div className="product-list-item">
     <div className="prod-body">
       <div className="prod-img">
@@ -56,33 +65,48 @@ const cardTemplate = ({ product, text, onClickFunction, category }) => (
 
 export const CartItem = ({
   product,
-  addToCart,
-  removeFromCart,
   productInCart,
   type,
   decreaseItem,
   itemCount,
   category,
+  addProductToCart,
+  removeProductFromCart,
+  setCartItemCount,
 }) => {
   const text = productInCart ? Cart.REMOVE_FROM_CART : Cart.ADD_TO_CART;
   const onClickFunction = () => {
     if (type === CART_ITEM) {
-      return removeFromCart(product);
+      return removeProductFromCart(product.id);
     }
-    return productInCart ? removeFromCart(product) : addToCart(product);
+    return productInCart
+      ? removeProductFromCart(product.id)
+      : addProductToCart(product);
   };
 
-  const itemObject = {
+  const itemProps = {
     itemCount,
     decreaseItem,
     category,
-    addToCart,
     product,
     text,
+    setCartItemCount,
     onClickFunction,
   };
 
-  return type === CART_ITEM
-    ? cartTemplate(itemObject)
-    : cardTemplate(itemObject);
+  return type === CART_ITEM ? cartTemplate(itemProps) : cardTemplate(itemProps);
+};
+
+cartTemplate.propTypes = {
+  product: PropTypes.object,
+  text: PropTypes.string,
+  onClickFunction: PropTypes.func,
+  itemCount: PropTypes.number,
+  setCartItemCount: PropTypes.func,
+};
+
+cardTemplate.propTypes = {
+  product: PropTypes.object,
+  text: PropTypes.string,
+  onClickFunction: PropTypes.func,
 };
