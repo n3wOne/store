@@ -3,10 +3,9 @@ import {
   FILTER_ITEMS,
   LOAD_PRODUCT_DETAILS,
   LOAD_PRODUCT_DETAILS_SUCCESS,
+  LOAD_PRODUCT_LIST_SUCCESS,
+  LOAD_PRODUCT_LIST,
 } from "../action/actions";
-
-export const LOAD_PRODUCT_LIST_SUCCESS = "LOAD_PRODUCT_LIST_SUCCESS";
-export const LOAD_PRODUCT_LIST = "LOAD_PRODUCT_LIST";
 
 const initialState = {
   products: [],

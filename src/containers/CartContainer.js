@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { CartItem } from "../components/CartItem";
+import { CartItem } from "../components/cart/CartItem";
 import {
   CART_ITEM,
   ROUTE_TO_CHECKOUT,

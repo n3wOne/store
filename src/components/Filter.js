@@ -1,10 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connectFilterToStore } from "../hoc/ConnectHolder";
+import { useBreakpoint } from "../hoc/BreakpointProvider";
 
 const Filter = (props) => {
   const { categories, filterItems, filterList } = props;
 
+  const breakpoints = useBreakpoint();
   const handleChange = (event) => {
     const { target } = event;
     const value = target.checked;
@@ -29,7 +31,11 @@ const Filter = (props) => {
         </label>
       </li>
     ));
-  return <ul className="filter-root">{prepareChildren}</ul>;
+  return !breakpoints.mob && !breakpoints.tablet ? (
+    <div className="filter-root">
+      <ul className="filter-list">{prepareChildren}</ul>
+    </div>
+  ) : null;
 };
 
 export default connectFilterToStore(Filter);

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import Grid from "@material-ui/core/Grid";
+// import Grid from "@material-ui/core/Grid";
 import PropTypes from "prop-types";
 // import Grid from "../Grid";
-import TextField from "@material-ui/core/TextField";
+// import TextField from "@material-ui/core/TextField";
+import TextField from "../helpers/TextField";
 import {
   CURRENCY,
   ORDER_SUMMARY,
@@ -87,9 +88,8 @@ const CheckoutForm = (props) => {
           style={{ padding: "20px", marginTop: "10px", marginBottom: "20px" }}
         >
           <h1 align="center">{CheckoutText.CHECKOUT}</h1>
-          <input type="text" name="testname" />
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={6}>
+          <div className={"grid spacing-3"}>
+            <div className={"col-desk-6 col-mob-4"}>
               <TextField
                 required={true}
                 id="firstName"
@@ -99,8 +99,8 @@ const CheckoutForm = (props) => {
                 fullWidth
                 autoComplete="fname"
               />
-            </Grid>
-            <Grid item xs={12} sm={6}>
+            </div>
+            <div className={"col-desk-6 col-mob-4"}>
               <TextField
                 required={true}
                 id="lastName"
@@ -110,8 +110,8 @@ const CheckoutForm = (props) => {
                 fullWidth
                 autoComplete="lname"
               />
-            </Grid>
-            <Grid item xs={12}>
+            </div>
+            <div className={"col-desk-12"}>
               <TextField
                 id="address"
                 name="address"
@@ -120,8 +120,8 @@ const CheckoutForm = (props) => {
                 fullWidth
                 autoComplete="address"
               />
-            </Grid>
-            <Grid item xs={12}>
+            </div>
+            <div className={"col-desk-12"}>
               <TextField
                 id="tel"
                 name="tel"
@@ -131,8 +131,8 @@ const CheckoutForm = (props) => {
                 fullWidth
                 autoComplete="tel"
               />
-            </Grid>
-            <Grid item xs={12}>
+            </div>
+            <div className={"col-desk-12"}>
               <TextField
                 id="email"
                 name="email"
@@ -141,8 +141,8 @@ const CheckoutForm = (props) => {
                 fullWidth
                 autoComplete="email"
               />
-            </Grid>
-            <Grid item xs={12}>
+            </div>
+            <div className={"col-desk-12"}>
               <TextField
                 id="comment"
                 name="comment"
@@ -151,18 +151,18 @@ const CheckoutForm = (props) => {
                 fullWidth
                 autoComplete="email"
               />
-            </Grid>
+            </div>
 
-            <Grid item xs={12}>
+            <div className={"col-desk-12"}>
               <h2>{ORDER_SUMMARY}</h2>
               {cartItems.size > 0 ? (
                 renderCartTotal()
               ) : (
                 <div>{CART_IS_EMPTY}</div>
               )}
-            </Grid>
+            </div>
 
-            <Grid item xs={12} className="filter-item">
+            <div className={"col-desk-12 filter-item"}>
               <input
                 required={true}
                 checked={agreement}
@@ -174,8 +174,8 @@ const CheckoutForm = (props) => {
               <label className="filter-item-label" htmlFor="agreement">
                 {CheckOutForm.agreement}
               </label>
-            </Grid>
-          </Grid>
+            </div>
+          </div>
           <div className="place-order">
             <button type="submit" disabled={submitDisabled}>
               {CheckoutText.PLACE_ORDER}

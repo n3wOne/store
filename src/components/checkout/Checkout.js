@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import CheckoutForm from "./CheckoutForm";
-import ThankYouPage from "../../pages/ThankYouPage";
+import ThankYouPage from "./ThankYouPage";
 import { connectToStore } from "../../hoc/ConnectHolder";
 import { CART_IS_EMPTY, REQUEST_URL } from "../../Constants";
 

@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { Cart, CART_ITEM } from "../Constants";
-import Grid from "./Grid";
+import { Cart, CART_ITEM } from "../../Constants";
 
 const cartTemplate = ({
   product,
@@ -11,7 +10,7 @@ const cartTemplate = ({
   itemCount,
   setCartItemCount,
 }) => (
-  <Grid className="product-row" container size={12}>
+  <div className="product-row col-desk-12 grid">
     <img className="product-item-img" src={product.imgUrl} alt="" />
     <div className="product-item-title">{product.name}</div>
     <div className="product-item-control">
@@ -33,11 +32,11 @@ const cartTemplate = ({
     <div className="product-item-button">
       <button onClick={onClickFunction}>{text}</button>
     </div>
-  </Grid>
+  </div>
 );
 
 const cardTemplate = ({ product, text, onClickFunction }) => (
-  <div className="product-list-item">
+  <div className="product-list-item col-desk-">
     <div className="prod-body">
       <div className="prod-img">
         <img src={product.imgUrl} alt="" />

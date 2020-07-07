@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { CartItem } from "../components/CartItem";
+import { CartItem } from "../components/cart/CartItem";
 import { CARD_ITEM, LOADING } from "../Constants";
 import { data2 as data } from "../data/mockData";
 import { connectToStore } from "../hoc/ConnectHolder";
@@ -64,7 +64,7 @@ class ProductList extends Component {
   render() {
     const { isLoading } = this.props;
     return !isLoading ? (
-      <div className="product-list">{this.prepareChildren()}</div>
+      <div className="grid">{this.prepareChildren()}</div>
     ) : (
       <div>{LOADING}</div>
     );

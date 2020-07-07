@@ -137,22 +137,22 @@ button:disabled{
 
 
 .navigation-top{
-    width: calc(100% + 24px);
-    /*margin: -12px;*/
+    align-items: center;
     justify-content: center;
-    /*width: 100%;*/
-    display: flex;
-    flex-wrap: wrap;
-    box-sizing: border-box;
 }
 
+@media (max-width: 1020px) {
+    .navigation-top .cart{
+        justify-content: flex-end;
+    }
+}
+
+
 .container{
-    width: calc(100% + 24px);
-    margin: -12px;
-    width: 100%;
+    box-sizing: border-box;
     display: flex;
     flex-wrap: wrap;
-    box-sizing: border-box;
+    width: 100%
 }
 
 .root{
@@ -163,7 +163,7 @@ button:disabled{
 
 
 .footer{
-    padding: 24px 16px;
+    /*padding: 24px 16px;*/
     margin-top: auto;
     background-color: #eeeeee;
 }
@@ -205,6 +205,10 @@ input{
     float: right;
     place-self: flex-end;
     margin-right: 50px;
+}
+
+.navigation-item{
+    display: inline-flex;
 }
 
 .navigation-item a{

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { CheckoutText, CURRENCY } from "../Constants";
+import { CheckoutText, CURRENCY } from "../../Constants";
 
 const ThankYouPage = (props) => {
   const { order, cartItems, cartTotal, data } = props;
@@ -35,7 +35,7 @@ const ThankYouPage = (props) => {
           Ваш контактный телефон: {data.tel}
           <br />
           <span className="order-warning">
-            Внимание! Если Вы указали не корректный телефон, мы не сможем с Вами
+            Внимание! Если Вы указали некорректный телефон, мы не сможем с Вами
             связаться!
           </span>
         </p>

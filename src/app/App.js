@@ -1,61 +1,73 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import "../styles/style.css";
-import { Header } from "../containers/Header";
+import "../styles/test.scss";
+import "../styles/main.scss";
+import { Header } from "../components/Header";
 import ProductList from "../containers/ProductList";
-import { Footer } from "../containers/Footer";
-import Grid from "../components/Grid";
+import { Footer } from "../components/Footer";
 import ProductDetails from "../components/ProductDetails";
 import Checkout from "../components/checkout/Checkout";
 import Filter from "../components/Filter";
-import CartWidget from "../components/CartWidget";
 import CartContainer from "../containers/CartContainer";
+import { ROUTE_TO_CART, ROUTE_TO_CHECKOUT, ROUTE_TO_HOME } from "../Constants";
+import { useBreakpoint } from "../hoc/BreakpointProvider";
 
-const App = () => (
-  <div className="root">
-    <div className="main-container">
-      <div className="main-container-paper" style={{ padding: "20px" }}>
-        <div className="navigation-top">
-          <Grid item size={9}>
-            <Header />
-          </Grid>
-          <Grid item size={3}>
-            <CartWidget />
-          </Grid>
+const App = () => {
+  const breakpoints = useBreakpoint();
+  return (
+    <div className="root">
+      <div className="main-container">
+        <div className="main-container-paper" style={{ padding: "20px 0" }}>
+          <div className="navigation-top grid">
+            <div className="col-desk-12">
+              <Header />
+            </div>
+          </div>
+          <div className="grid">
+            <Switch>
+              <Route exact path={ROUTE_TO_HOME}>
+                {!breakpoints.mob && !breakpoints.tablet && (
+                  <div className="col-desk-3 col-mob-4">
+                    <Filter />
+                  </div>
+                )}
+                <div
+                  className={`col-mob-4 col-desk-${
+                    breakpoints.mob || breakpoints.tablet ? 12 : 9
+                  }`}
+                >
+                  <ProductList />
+                </div>
+              </Route>
+              <Route
+                exact
+                path={ROUTE_TO_CART}
+                render={() => (
+                  <div className={"col-desk-12"}>
+                    <CartContainer />
+                  </div>
+                )}
+              />
+              <Route
+                exact
+                path={ROUTE_TO_CHECKOUT}
+                render={() => <Checkout />}
+              />
+              <Route
+                path={"/product/:id"}
+                render={(routerProps) => <ProductDetails {...routerProps} />}
+              />
+              <ProductList />
+            </Switch>
+          </div>
         </div>
-        <Grid container size={12}>
-          <Switch>
-            <Route exact path={"/"}>
-              <Grid item size={3}>
-                <Filter />
-              </Grid>
-              <Grid item size={9}>
-                <ProductList />
-              </Grid>
-            </Route>
-            <Route
-              exact
-              path={"/cart"}
-              render={() => (
-                <Grid item size={12}>
-                  <CartContainer />
-                </Grid>
-              )}
-            />
-            <Route exact path={"/checkout"} render={() => <Checkout />} />
-            <Route
-              path={"/product/:id"}
-              render={(routerProps) => <ProductDetails {...routerProps} />}
-            />
-            <ProductList />
-          </Switch>
-        </Grid>
       </div>
+      <footer className="footer">
+        <Footer />
+      </footer>
     </div>
-    <footer className="footer">
-      <Footer />
-    </footer>
-  </div>
-);
+  );
+};
 
 export default App;

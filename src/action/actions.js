@@ -1,6 +1,4 @@
-import { LOAD_PRODUCT_LIST_SUCCESS } from "../reducer/ProductsReducer";
-
-export const DECREASE_CART_ITEM = "DECREASE_CART_ITEM";
+export const LOAD_PRODUCT_LIST_SUCCESS = "LOAD_PRODUCT_LIST_SUCCESS";
 export const FILTER_ITEMS = "FILTER_ITEMS";
 export const LOAD_PRODUCT_DETAILS = "LOAD_PRODUCT_DETAILS";
 export const LOAD_PRODUCT_DETAILS_SUCCESS = "LOAD_PRODUCT_DETAILS_SUCCESS";
@@ -42,10 +40,5 @@ export const loadProductListSuccess = (payload) => ({
 
 export const loadProductDetails = (payload) => ({
   type: LOAD_PRODUCT_DETAILS,
-  payload,
-});
-
-export const decreaseCartItem = (payload) => ({
-  type: DECREASE_CART_ITEM,
   payload,
 });
