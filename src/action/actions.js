@@ -7,6 +7,8 @@ export const CLEAR_CART = "CLEAR_CART";
 export const ADD_TO_CART_ITEM = "ADD_TO_CART_ITEM";
 export const REMOVE_ITEM_FROM_CART = "REMOVE_ITEM_FROM_CART";
 export const SET_CART_ITEM_COUNT = "SET_CART_ITEM_COUNT";
+export const LOAD_CATEGORIES = "LOAD_CATEGORIES";
+export const LOAD_CATEGORIES_SUCCESS = "LOAD_CATEGORIES_SUCCESS";
 
 export const removeProductFromCart = (payload) => ({
   type: REMOVE_ITEM_FROM_CART,
@@ -40,5 +42,15 @@ export const loadProductListSuccess = (payload) => ({
 
 export const loadProductDetails = (payload) => ({
   type: LOAD_PRODUCT_DETAILS,
+  payload,
+});
+
+export const loadCategories = (payload) => ({
+  type: LOAD_CATEGORIES,
+  payload,
+});
+
+export const loadCategoriesSuccess = (payload) => ({
+  type: LOAD_CATEGORIES_SUCCESS,
   payload,
 });

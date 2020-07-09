@@ -13,13 +13,26 @@ class ProductList extends Component {
   }
 
   getProductList() {
-    const { loadProductListStart, loadProductListSuccess } = this.props;
+    const {
+      loadProductListStart,
+      loadProductListSuccess,
+      loadCategoriesSuccess,
+      loadCategories,
+    } = this.props;
+
     loadProductListStart();
+    loadCategories();
 
     // loadProductListSuccess(data) // mock data;
 
-    fetch("http://www.mocky.io/v2/5eb1b775320000749428f91a")
+    fetch("http://shop.ferma-ivanovka.ru/categories.json")
       .then((res) => res.json())
+      .catch((e) => console.error(e))
+      .then((result) => loadCategoriesSuccess(result));
+
+    fetch("http://shop.ferma-ivanovka.ru/data.json")
+      .then((res) => res.json())
+      .catch((e) => console.error(e))
       .then((result) => loadProductListSuccess(result));
   }
 
@@ -62,8 +75,8 @@ class ProductList extends Component {
   }
 
   render() {
-    const { isLoading } = this.props;
-    return !isLoading ? (
+    const { isLoading, categoriesIsLoading } = this.props;
+    return !isLoading && !categoriesIsLoading ? (
       <div className="grid">{this.prepareChildren()}</div>
     ) : (
       <div>{LOADING}</div>
@@ -75,8 +88,11 @@ export default connectToStore(ProductList);
 
 ProductList.propTypes = {
   isLoading: PropTypes.bool,
+  categoriesIsLoading: PropTypes.bool,
   loadProductListStart: PropTypes.func,
   loadProductListSuccess: PropTypes.func,
+  loadCategoriesSuccess: PropTypes.func,
+  loadCategories: PropTypes.func,
   cart: PropTypes.object,
   addProductToCart: PropTypes.func,
   cartItems: PropTypes.object,

@@ -8,12 +8,15 @@ import {
   loadProductListStart,
   loadProductListSuccess,
   loadProductDetails,
+  loadCategories,
+  loadCategoriesSuccess,
 } from "../action/actions";
 
 const mapStateToProps = (state) => {
   const { cart, products } = state;
   return {
     isLoading: products.productIsLoading,
+    categoriesIsLoading: products.categoriesIsLoading,
     products,
     productsList: products.productsList,
     cartTotal: cart.cartTotal,
@@ -43,8 +46,7 @@ const mapFilterDispatchToProps = (dispatch) => ({
 });
 
 const mapProductDispatchToProps = (dispatch) => ({
-  loadProductInfo: (payload) =>
-    dispatch(loadProductDetails(payload)),
+  loadProductInfo: (payload) => dispatch(loadProductDetails(payload)),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -52,6 +54,8 @@ const mapDispatchToProps = (dispatch) => ({
   setCartItemCount: (payload) => dispatch(setCartItemCount(payload)),
   addProductToCart: (payload) => dispatch(addProductToCart(payload)),
   clearCart: () => dispatch(clearCart()),
+  loadCategories: () => dispatch(loadCategories()),
+  loadCategoriesSuccess: (payload) => dispatch(loadCategoriesSuccess(payload)),
   loadProductListStart: () => dispatch(loadProductListStart()),
   loadProductListSuccess: (payload) =>
     dispatch(loadProductListSuccess(payload)),

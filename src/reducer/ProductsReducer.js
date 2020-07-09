@@ -1,19 +1,21 @@
-import { categories, data2 as data } from "../data/mockData";
 import {
   FILTER_ITEMS,
   LOAD_PRODUCT_DETAILS,
   LOAD_PRODUCT_DETAILS_SUCCESS,
   LOAD_PRODUCT_LIST_SUCCESS,
   LOAD_PRODUCT_LIST,
+  LOAD_CATEGORIES_SUCCESS,
+  LOAD_CATEGORIES,
 } from "../action/actions";
 
 const initialState = {
   products: [],
   productsList: new Map([]),
-  categories,
+  categories: [],
   filterList: [],
   isLoading: true,
   productIsLoading: true,
+  categoriesIsLoading: true,
 };
 
 const loadProduct = (state, id) => {
@@ -36,6 +38,14 @@ export function ProductReducer(state = initialState, action) {
         products: action.payload,
         productsList: productsToMap(action.payload),
         productIsLoading: false,
+      };
+    case LOAD_CATEGORIES:
+      return { ...state, categoriesIsLoading: true };
+    case LOAD_CATEGORIES_SUCCESS:
+      return {
+        ...state,
+        categories: action.payload,
+        categoriesIsLoading: false,
       };
     case FILTER_ITEMS:
       return { ...state, filterList: action.payload };

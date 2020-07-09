@@ -6,7 +6,6 @@ import { BreakpointProvider } from "./hoc/BreakpointProvider";
 import App from "./app/App";
 import store, { history } from "./store";
 import { queries } from "./utils";
-console.log(queries);
 
 ReactDOM.render(
   <Provider store={store}>
