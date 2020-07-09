@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/menu-style.scss";
 import { Link } from "react-router-dom";
+import Filter from "./Filter";
 import {
   Menu,
   ROUTE_TO_CART,
@@ -22,21 +23,24 @@ const MobileMenu = () => {
         <input
           type="checkbox"
           checked={showMenu}
-          onChange={(e) => hideMenu(e.target.checked)}
+          onChange={() => hideMenu(!showMenu)}
         />
         <span />
         <span />
         <span />
         <div className={"grid"}>
-          <ul id="menu">
-            {menuItems.map(([link, text]) => (
-              <li key={text}>
-                <Link onClick={() => hideMenu(false)} to={link}>
-                  {text}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <div id="menu">
+            <ul>
+              {menuItems.map(([link, text]) => (
+                <li key={text}>
+                  <Link onClick={() => hideMenu(false)} to={link}>
+                    {text}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <Filter />
+          </div>
         </div>
       </div>
     </nav>
