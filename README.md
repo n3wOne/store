@@ -1,4 +1,4 @@
 # Sample Store
-Working demo: http://vk.ferma-ivanovka.ru/shop/
+Working demo: https://shop.ferma-ivanovka.ru/
 
 Still developing.
