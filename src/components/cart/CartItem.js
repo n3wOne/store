@@ -39,7 +39,14 @@ const cardTemplate = ({ product, text, onClickFunction }) => (
   <div className="product-list-item col-desk-">
     <div className="prod-body">
       <div className="prod-img">
-        <img src={product.imgUrl} alt="" />
+        <div
+          className={"img"}
+          style={{
+            background: `url(${product.imgUrl}) 50% 50% no-repeat`,
+            backgroundSize: "contain",
+          }}
+          alt=""
+        />
       </div>
       <div className="prod-title">
         <Link
