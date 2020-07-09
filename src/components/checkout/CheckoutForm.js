@@ -22,6 +22,7 @@ const CheckoutForm = (props) => {
 
   const [inputData, handleChange] = useState({});
   const [agreement, handleAgreement] = useState(false);
+  const [formIsValid, handleFormValidation] = useState(false);
 
   const submitDisabled = !cartItems.size > 0 || !agreement;
 
@@ -34,9 +35,13 @@ const CheckoutForm = (props) => {
     });
   };
 
+  const handleFormChange = (e) => {
+    handleFormValidation(e.currentTarget.checkValidity());
+  };
+
   const validateForm = (event) => {
     event.preventDefault();
-    handleSubmitForm(inputData);
+    formIsValid && handleSubmitForm(inputData);
   };
 
   const renderOrderSummary = () => {
@@ -82,7 +87,7 @@ const CheckoutForm = (props) => {
 
   return (
     <main className="checkout-form-main">
-      <form method="post" onSubmit={(event) => validateForm(event)}>
+      <form onChange={handleFormChange} method="post" onSubmit={validateForm}>
         <div
           className="main-container-paper"
           style={{ padding: "20px", marginTop: "10px", marginBottom: "20px" }}
@@ -94,6 +99,8 @@ const CheckoutForm = (props) => {
                 required={true}
                 id="firstName"
                 name="firstName"
+                pattern={".{3,}"}
+                title={CheckOutForm.validation.name}
                 onChange={handleInputChange}
                 label={CheckOutForm.name}
                 fullWidth
@@ -102,7 +109,6 @@ const CheckoutForm = (props) => {
             </div>
             <div className={"col-desk-6 col-mob-4"}>
               <TextField
-                required={true}
                 id="lastName"
                 name="lastName"
                 onChange={handleInputChange}
@@ -123,13 +129,15 @@ const CheckoutForm = (props) => {
             </div>
             <div className={"col-desk-12"}>
               <TextField
-                id="tel"
-                name="tel"
+                id="phone"
+                name="phone"
                 required={true}
                 onChange={handleInputChange}
-                label={CheckOutForm.tel}
+                label={CheckOutForm.phone}
+                title={CheckOutForm.validation.phone}
                 fullWidth
-                autoComplete="tel"
+                pattern={".{6,}"}
+                autoComplete="phone"
               />
             </div>
             <div className={"col-desk-12"}>

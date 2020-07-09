@@ -32,7 +32,7 @@ const ThankYouPage = (props) => {
       </div>
       <div className="text">
         <p>
-          Ваш контактный телефон: {data.tel}
+          Ваш контактный телефон: {data.phone}
           <br />
           <span className="order-warning">
             Внимание! Если Вы указали некорректный телефон, мы не сможем с Вами

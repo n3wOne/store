@@ -1,8 +1,11 @@
-export const REQUEST_URL = "http://vk.ferma-ivanovka.ru/fetchquery.php";
+const { protocol } = window.location;
+export const REQUEST_URL = `${protocol}//vk.ferma-ivanovka.ru/fetchquery.php`;
 export const CART_ITEM = "cartItem";
 export const CARD_ITEM = "cardItem";
 export const LOADING = "Загрузка данных";
 export const WEB_SITE_LINK = "https://ferma-ivanovka.ru";
+export const FETCH_PRODUCT_DATA_LINK = `${protocol}//shop.ferma-ivanovka.ru/data.json`;
+export const FETCH_CATEGORIES_LINK = `${protocol}//shop.ferma-ivanovka.ru/categories.json`;
 export const COPYRIGHT = "© ";
 export const COMPANY_NAME = "Ферма «Ивановка»";
 export const Cart = {
@@ -39,11 +42,15 @@ export const CheckOutForm = {
   name: "Имя",
   lastName: "Фамилия",
   address: "Адрес",
-  tel: "Контактный телефон",
+  phone: "Контактный телефон",
   email: "email",
   comment: "Комментарий к заказу",
   total: "Общая сумма заказа",
   agreement: "Я даю согласие на обработку своих персональных данных",
+  validation: {
+    name: "Имя должно содержать более 3х символов",
+    phone: "Укажите корректный мобильный телефон",
+  },
 };
 
 export const devices = {

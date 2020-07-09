@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { CartItem } from "../components/cart/CartItem";
-import { CARD_ITEM, LOADING } from "../Constants";
+import {
+  CARD_ITEM,
+  LOADING,
+  FETCH_PRODUCT_DATA_LINK,
+  FETCH_CATEGORIES_LINK,
+} from "../Constants";
 import { data2 as data } from "../data/mockData";
 import { connectToStore } from "../hoc/ConnectHolder";
 
@@ -25,12 +30,12 @@ class ProductList extends Component {
 
     // loadProductListSuccess(data) // mock data;
 
-    fetch("http://shop.ferma-ivanovka.ru/categories.json")
+    fetch(FETCH_CATEGORIES_LINK)
       .then((res) => res.json())
       .catch((e) => console.error(e))
       .then((result) => loadCategoriesSuccess(result));
 
-    fetch("http://shop.ferma-ivanovka.ru/data.json")
+    fetch(FETCH_PRODUCT_DATA_LINK)
       .then((res) => res.json())
       .catch((e) => console.error(e))
       .then((result) => loadProductListSuccess(result));

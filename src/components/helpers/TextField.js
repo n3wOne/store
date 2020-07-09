@@ -9,8 +9,10 @@ const TextField = (props) => {
     label,
     name,
     value,
-    required,
+    required = false,
     onChange,
+    pattern,
+    title = "",
   } = props;
   const [focusClass, setFocusClass] = useState("");
 
@@ -45,12 +47,15 @@ const TextField = (props) => {
         } ${focusClass.div}`}
       >
         <input
+          required={required}
           onChange={onChange}
           aria-invalid="false"
+          pattern={pattern}
           autoComplete={autoComplete}
           id={id}
           name={name}
           type="text"
+          title={title}
           onFocus={handleFocus}
           onBlur={handleBlur}
           className="InputBase-input"
@@ -64,6 +69,8 @@ const TextField = (props) => {
 export default TextField;
 
 TextField.propTypes = {
+  pattern: PropTypes.string,
+  title: PropTypes.string,
   autoComplete: PropTypes.string,
   fullWidth: PropTypes.bool,
   id: PropTypes.string,
